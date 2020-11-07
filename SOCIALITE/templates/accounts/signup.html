@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Socialite | Signup</title>
+	<meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"/> -->
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+
+  font-family: 'Poppins', sans-serif;
+}
+.container{
+	text-align: center;
+	background-color: #fff;
+	width: 330px;
+	height: 490px;
+	/*margin-top: 70px;*/
+	margin: 80px auto;
+	padding: 20px 14px;
+	border-radius: 4px;
+	box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+}
+form{
+	text-align: center;
+	display: inline-block;
+	width: 280px;
+	height: 470px;
+	margin: 40px auto;
+}
+input{
+	margin: 10px 0px;
+	padding: 4px 6px;
+	width: 260px;
+
+	/*margin-left: 30px;*/
+}
+
+#submit{
+	width: 120px;
+	height: 36px;
+	margin-top: 15px;
+	/*margin-left: 80px;*/
+	background-color: #2ed573;
+	border: none;
+	border-radius: 3px;
+}
+#submit:hover{
+	color: #fff;
+	background-color: #000;
+	transition: 0.4s ease;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+	<h2 style="margin-bottom: -40px;padding: 14px 22px;font-size: 20px;">Hey there !!! Register now 🚀🚀🚀</h2>
+	<form method="POST" action="">
+		{% csrf_token %}
+		<!-- <label for="fname">First Name</label> -->
+		<input type="text" name="fname" id="fname" placeholder="First Name">
+
+		<!-- <label for="lname">Last Name</label> -->
+		<input type="text" name="lname" id="lname" placeholder="Last Name">
+
+		<!-- <label for="email">Email</label> -->
+		<input type="email" name="email" id="email" placeholder="Email address" >
+	
+
+		<!-- <label for="password">Create Password</label> -->
+		<input type="password" name="pass1" id="password" placeholder="Password">
+
+		<!-- <label for="password">Confirm Password</label> -->
+		<input type="password" name="pass2" id="password" placeholder="Confirm Password">
+
+		{% if msg %}
+		<span class="msg" style="color: {{c}};font-size: 13px;">{{msg }}</span>
+		{% endif %}
+		{% if msg_pass %}
+		<span class="msg" style="color: red;font-size: 13px;">{{ msg_pass }}</span>
+		{% endif %}
+		<br>
+
+		<input type="submit" name="Submit" id="submit">
+		<p style="font-size: 14px;text-align: center;">Already registered ?? <a href="{% url 'signin' %}">Login here</a></p>
+	</form>
+</div>
+</body>
+</html>

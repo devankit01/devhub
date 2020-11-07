@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Skill</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="descriptison" />
+    <meta content="" name="keywords" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"/> -->
+     {% comment %} <script src="https://kit.fontawesome.com/a076d05399.js"></script>  {% endcomment %}
+    <style type="text/css">
+      @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        box-sizing: border-box;
+
+        font-family: "Poppins", sans-serif;
+      }
+      .container {
+        text-align: center;
+        background-color: #fff;
+        width: 380px;
+        height: 270px;
+        /*margin-top: 70px;*/
+        margin: 150px auto;
+        padding: 12px 14px;
+        border-radius: 4px;
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+      }
+      form {
+        text-align: center;
+        display: inline-block;
+        width: 300px;
+        height: 470px;
+        margin: 40px auto;
+      }
+      input,
+      select {
+        margin: 10px 0px;
+        padding: 4px 6px;
+        width: 280px;
+      }
+
+      #submit {
+        width: 120px;
+        height: 36px;
+        margin-top: 15px;
+
+        background-color: #2ed573;
+        border: none;
+        border-radius: 3px;
+      }
+      #submit:hover {
+        color: #fff;
+        background-color: #000;
+        transition: 0.4s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <div class="container">
+      <h2 style="margin-bottom: -40px; padding: 14px 30px; font-size: 20px;">
+        Edit Skill 📝📝📝
+      </h2>
+      <form method="POST">
+        {% csrf_token %}
+
+        <input
+          type="text"
+          name="name"
+          id="email"
+          placeholder="Skill Name"
+          style=""
+          value="{{s.name}}"
+        />
+
+        <select name="skill">
+          <option value="0">Beginner</option>
+          <option value="1">Intermediate</option>
+          <option value="2">Expert</option>
+        </select>
+
+        <input
+          type="submit"
+          name="submit"
+          value="Update"
+          style="
+            background-color: tomato;
+            border: none;
+            padding: 0px 12px;
+            height: 35px;
+            border-radius: 2px;
+          "
+        />
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+  </div>
+  <div class="btn">
+    <span class="fas fa-bars"></span>
+  </div>
+  <nav class="sidebar">
+    <div class="text">
+      <h1
+        style="
+          border-radius: 50%;
+          width: 80px;
+          height: 80px;
+          margin: 30px auto;
+          border: 2px solid #fff;
+          padding-top: 5px;
+        "
+      >
+        {{d.icon}}
+      </h1>
+      <p style="margin-top: -14px; font-size: 22px;">
+        <a href="{{p.fb}}" style="color: white;"
+          ><i class="fab fa-facebook"></i
+        ></a>
+        <a href="{{p.lkd}}" style="color: white;"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+        <a href="{{p.git}}" style="color: white;"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a href="{{p.hacker}}" style="color: white;"
+          ><i class="fab fa-hackerrank"></i
+        ></a>
+      </p>
+      <!-- <p style="font-size: 12px; margin-top: -15px;">
+       {{p.username.first_name}} {{p.username.last_name}}
+      </p> -->
+    </div>
+    <ul>
+      <li class="active"><a href="{% url 'dashboard' %}">Home</a></li>
+      <li>
+        <!--  <a href="#" class="feat-btn">Features
+          <span class="fas fa-caret-down first"></span>
+        </a>
+        <ul class="feat-show">
+<li><a href="#">Pages</a></li>
+<li><a href="#">Elements</a></li>
+</ul>
+</li>
+<li> -->
+        <!--           <a href="#" class="serv-btn">Services
+          <span class="fas fa-caret-down second"></span>
+        </a>
+        <ul class="serv-show">
+<li><a href="#">App Design</a></li>
+<li><a href="#">Web Design</a></li>
+</ul>
+</li>
+-->
+      </li>
+
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+      <li><a href="{% url 'skills' %}">Skills</a></li>
+      <li><a href="{% url 'certifications' %}">Certifications</a></li>
+
+      <li><a href="{% url 'posts' %}">Posts</a></li>
+      <li><a href="{% url 'myresume' %}">My Resume</a></li>
+
+
+      <!-- <li><a href="#"></a></li> -->
+      <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+  </nav>

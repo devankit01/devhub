@@ -1,0 +1,139 @@
+
+
+Web Architecture = 
+Study Stack -
+            -education  
+                -Std 0-5 
+                    -Websites
+                            -Content
+                            -Rating
+                            -Link(Website Link)
+                    -App
+                    -Videos
+                -Std 6-8
+                -Std 9-12
+                - IIT/JEE
+                p,c,m
+                -NEET
+                -NDA
+                -Btech,BA,BCA etc
+                cse
+            -Computer Skills
+                -WD
+                    - HTML
+                        -Websites
+                            -Content
+                            -Rating
+                            -Link(Website Link)
+                        -Apps
+                        -Videos
+                    - CSS
+                    - JS ....
+                -AD
+                -programming
+                -DSA
+                -ML 
+                -DS 
+            -Gaming and Soft.
+                -Content
+                -Link
+                -Rating :
+            -Arts and Photography
+                -
+            -Music and Instruments
+                -Guiter
+                    --Websites
+                        -Content
+                                -Rating
+                        -Link(Website Link)
+                        -Apps
+                        -Videos
+            -Language Learning
+
+
+
+Overall Model =
+class categories:
+    name=models.ca
+
+class subcategories:
+    name=foregienkey(categories)
+
+class subsubcategory:
+    name=foregienkey(subcategories)
+    Web
+    Videos
+    app
+
+
+    class categories:
+    name = >
+
+    class subcategories
+    name=>
+    foregienkey=>categories
+
+    class subsubcategory:
+    name=>
+    foregienkey=>subcategory
+
+    class Websites:
+        name=>
+        Content=>
+        Rating=>
+        url=>
+        foregienkey=>subsubcategory
+        foregienkey=>subcategory
+        foregienkey=>categories
+
+
+        =============End==================
+
+        author=>Details+Social Media Links
+
+        Blogs=>
+        class User
+            authority=>=Normal User
+                        Writer/Author=>Can Write Blogs and Can Create Normal Quiz
+                        Content
+                        Images
+                        date
+                        claps
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     =============================Quiz===============
+            Normal Quiz
+                -Questions
+                -Answers
+                -min 20-25
+                -Name ()
+                -category=>HTML,Python , Java , etc
+                
+            Certification Quiz
+            Stages 7
+            0-4 Quizzes
+            5-7 Projects
+
+            HTML or Python
+            0-4 25 Questions ->Attempt 25x4 100 
+            5-7 3 Projects in PDF forms => Code or Online Link python , java , web design
+            Overall %
+                80%
+            Certification Generate =>Email with A+ A B+ B
+
+
+            

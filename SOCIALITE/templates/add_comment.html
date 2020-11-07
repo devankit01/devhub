@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+
+    {% block head %}
+    <title>Dashboard</title>
+    {% endblock head %}
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="descriptison" />
+    <meta content="" name="keywords" />
+
+    <!-- <script src="jquery-2.1.4.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style type="text/css">
+            @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+      *{
+        margin: 0;
+        padding: 0;
+        user-select: none;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+      .btn{
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        height: 45px;
+        width: 45px;
+        text-align: center;
+        background: #fff;
+        border-radius: 3px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        color: black;
+        transition: left 0.4s ease;
+      }
+
+
+      .content .header{
+        font-size: 45px;
+        font-weight: 600;
+      }
+      .content p{
+        font-size: 30px;
+        font-weight: 500;
+      }
+      .loader-wrapper {
+        width: 100%;
+        height: 100%!important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #fff;
+        display:flex;
+        z-index: 100;
+        justify-content: center;
+        align-items: center;
+      }
+      .loader {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        border: 4px solid #000;
+        animation: loader 2s infinite ease;
+      }
+      .loader-inner {
+        vertical-align: top;
+        display: inline-block;
+        width: 100%;
+        background-color: #fff;
+        animation: loader-inner 2s infinite ease-in;
+      }
+      @keyframes loader {
+        0% { transform: rotate(0deg);}
+        25% { transform: rotate(180deg);}
+        50% { transform: rotate(180deg);}
+        75% { transform: rotate(360deg);}
+        100% { transform: rotate(360deg);}
+      }
+      @keyframes loader-inner {
+        0% { height: 0%;}
+        25% { height: 0%;}
+        50% { height: 100%;}
+        75% { height: 100%;}
+        100% { height: 0%;}
+      }
+      /* width */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .add-comment-box{
+
+        width: 350px;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        margin-bottom:  20px;
+
+        padding: 20px 20px;
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+        /*right: 0;*/
+      }
+      .wrap-comment{
+        width:350px;
+        height: auto;
+        margin: 0 auto;
+
+      }
+      input{
+        /*margin: 10px 10px;*/
+        padding: 4px 6px;
+        width: 210px;
+
+      }
+      {% block css %}
+      {% endblock css %}
+    </style>
+  </head>
+  <body>
+    {% include 'sidebar.html' %}
+    <!-- Body -->
+
+    {% block body %}
+    <div
+      class="posts"
+      style="
+        width: 360px;
+        height: 300px;
+        margin: 0 auto;
+        padding: 5px;
+        padding-top: 60px;
+        padding-bottom: 100px;
+      "
+    >
+      <div
+        class="card"
+        style="
+          padding-bottom: 40px;
+          box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
+          padding: 10px 20px;
+          margin: 10px 0px;
+        "
+      >
+        <div class="head" style="">
+          <!--   <div class="left" style="width: 40px;height: 40px;border: 1px solid #000; float: left;border-radius: 50%;margin-top: 10px;"></div> -->
+          <div
+            class="right"
+            style="width: ; margin-top: 10px; margin-left: ; padding: 0px 0px;"
+          >
+            <h3>
+              <a
+                href="{% url 'user_profile' id=post.username.pk %}"
+                style="color: #000; text-decoration: none;"
+                >{{post.username.first_name}}&nbsp;{{post.username.last_name}}</a
+              >
+            </h3>
+            <p style="font-size: 13px;">{{post.username.profile.bio}}</p>
+          </div>
+          <p style="font-size: 12px; color: teal;">
+            {{post.date}}&nbsp; <i class="far fa-clock"></i>
+          </p>
+        </div>
+        <br />
+        <div
+          class=""
+          style="margin-top: -15px; padding: 6px 3px; font-size: 15px;"
+        >
+          {{post.content}}
+        </div>
+        <div class="">
+          {% load static %} {% if post.image %}
+
+          <img
+            src="../media/images/{{post.image}}"
+            width="100%"
+            height="auto"
+            style="margin-top: 5px;"
+          />
+          {% else %} {% endif %}
+        </div>
+
+        <hr />
+        <div class="social">
+          <p
+            style="
+              font-size: 18px;
+              padding: 10px 10px;
+              margin-top: -5px !important;
+            "
+          >
+            <!-- Great Logic by me -->
+            <!--  <a href="{% url 'like_dislike_post'  %}" id="{{post.id}}" class="like" ><span id="heart-btn-{{post.id}}">{% if post.id in liked_post %}<i class="fas fa-heart" style="color: red"></i>{% else %}<i class="far fa-heart"></i>{% endif %}</span></a> -->
+
+            &nbsp;&nbsp;<span
+              style="float: right; font-size: 14px; padding-top: 4px;"
+              ><span id="like-count-{{post.id}}">{{ c }}</span> Likes {{l}}
+              Comments</span
+            >
+          </p>
+
+          <!-- <p style="font-size: 12px;">Maneet Srivastav <span style="font-size: 10px;">Great Job ❤</span></p> -->
+        </div>
+      </div>
+
+      {% for comment in y %}
+
+      <div
+        class="comments{{comment.id}}"
+        style="
+          width: 100%;
+          height: auto;
+          box-shadow: 2px 2px 18px rgba(0, 0, 0, 0.1);
+          padding: 5px 10px;
+          margin-bottom: 10px;
+        "
+      >
+        <div class="box">
+          <h4>
+            {{comment.username.first_name}} {{comment.username.last_name}}
+          </h4>
+          <p style="font-size: 14px;">{{comment.comment_text}}</p>
+          {% if comment.id in lst %}
+          <a
+            href="{% url 'delete_comment' id=comment.id %}"
+            id="{{comment.id}}"
+            class="deletec"
+            style="float: right; margin-top: -20px;"
+            ><i class="far fa-trash-alt"></i
+          ></a>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      <div
+        class="comments"
+        style="
+          width: 100%;
+          height: 100px;
+          padding: 5px 10px;
+          margin-bottom: 10px;
+        "
+      >
+        <div class="box">
+          <h4></h4>
+          <p style="font-size: 14px;"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap-comment">
+      <div class="add-comment-box">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="comment"
+            placeholder="Type your Comment..."
+            required=""
+          /><button
+            type="submit"
+            style="
+              width: 70px;
+              margin-left: 22px !important;
+              background-color: tomato;
+              border: none;
+              padding: 6px 8px;
+              border-radius: 3px;
+              box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            "
+          >
+            Add ➕
+          </button>
+        </form>
+      </div>
+    </div>
+
+    {% endblock body %}
+
+    <!-- Post -->
+
+    <!--  -->
+
+    <script>
+      // using ajax
+
+      $(".deletec").click(function (e) {
+        var id = this.id;
+        var href = this.href;
+
+        console.log(href, id);
+        e.preventDefault();
+
+        $.ajax({
+          url: href,
+          data: {},
+        });
+
+        $(".comments" + id).fadeOut(1000);
+      });
+
+      $(".btn").click(function () {
+        $(this).toggleClass("click");
+        $(".sidebar").toggleClass("show");
+      });
+      $(".feat-btn").click(function () {
+        $("nav ul .feat-show").toggleClass("show");
+        $("nav ul .first").toggleClass("rotate");
+      });
+      $(".serv-btn").click(function () {
+        $("nav ul .serv-show").toggleClass("show1");
+        $("nav ul .second").toggleClass("rotate");
+      });
+      $("nav ul li").click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+      });
+
+      $(window).on("load", function () {
+        $(".loader-wrapper").fadeOut("slow");
+      });
+    </script>
+  </body>
+</html>

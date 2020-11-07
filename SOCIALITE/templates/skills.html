@@ -1,0 +1,151 @@
+{% extends 'dashboard.html' %} {% block head %}
+<title>Skills</title>
+{% endblock head %} {% block css %} 
+.wrap{ width:60%; height:auto; margin:0px
+auto; padding-top: 50px; } .parent{ display: flex; justify-content:center; }
+.parent-two{ display: flex; justify-content:center; } .div1,.div2{ height:200px;
+width:100%; margin:20px; } .child1,.child2{ height:200px; width:100%;
+margin:20px; } .modal { position: fixed; left: 0; top: 0; width: 100%; height:
+100%; background-color: rgba(0, 0, 0, 0.5); opacity: 0; visibility: hidden;
+transform: scale(1.1); transition: visibility 0s linear 0.25s, opacity 0.25s 0s,
+transform 0.25s; } .modal-content { position: absolute; top: 50%; left: 50%;
+transform: translate(-50%, -50%); background-color: white; padding: 1rem 1.5rem;
+width: 24rem; border-radius: 2px; } .close-button { float: right; width: 1.5rem;
+line-height: 1.5rem; text-align: center; cursor: pointer; border-radius:
+0.25rem; background-color: ; } .close-button:hover { background-color: darkgray;
+} .show-modal { opacity: 1; visibility: visible; transform: scale(1.0);
+transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; } .modal
+{ position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color:
+rgba(0, 0, 0, 0.5); opacity: 0; visibility: hidden; transform: scale(1.1);
+transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s; }
+.modal-content { position: absolute; top: 50%; left: 50%; transform:
+translate(-50%, -50%); background-color: white; padding: 1rem 1.5rem; width:
+24rem; border-radius: 2px; } .close-button { float: right; width: 1.5rem;
+line-height: 1.5rem; text-align: center; cursor: pointer; border-radius:
+0.25rem; background-color: ; } .close-button:hover { background-color: darkgray;
+} .show-modal { opacity: 1; visibility: visible; transform: scale(1.0);
+transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s; } @media
+only screen and (max-width: 600px) { .parent{ display: flex; flex-direction:
+column; } .parent-two{ display: flex; flex-direction: column; } .child2{
+margin-top:-22px; } .div2{ margin-top:-90px; height:210px; } .div1{ height:60px;
+padding-right:120px; } #edit{ margin-left:4px;
+<!-- padding-top:-40px!important; -->
+
+} #edit-btn{ background-color:transparent; border:none;
+margin-top:0px!important; outline:none; } hr{ display:none; } } #edit-btn{
+background-color:transparent; border:none; outline:none; height:40px;
+<!-- background:red; -->
+
+margin-top:100px; } input,select{ margin: 10px 14px; padding: 4px 6px; width:
+300px; /*margin-left: 30px;*/ } {% endblock %} {% block body %}
+<div class="wrap">
+  <!-- <hr style="color: rgb(0,0,0,0.1);margin-top: 10px;opacity: 0.2;z-index: -2;"> -->
+  <h1 style="margin-top: 30px; font-size: 30px;">Skills</h1>
+
+  <div
+    class="trigger"
+    style="margin-top: -42px; margin-left: 0px; float: right;"
+  >
+    <button
+      style="
+        border: none;
+        background-color: tomato;
+        height: 35px;
+        padding: 4px 8px;
+        width: 120px;
+        border-radius: 2px;
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+      "
+    >
+      Add Skill
+    </button>
+  </div>
+  <div class="parent-two">
+    <div class="child1">
+      {% if s %} {% for skill in s %}
+      <div style="margin-bottom: 14px;">
+        <p style="font-size: 18px;">
+          <b
+            >{{skill.name}}<span style="font-size: 15px;">
+              {{skill.emoji}}
+            </span></b
+          >
+        </p>
+        <span style="font-size: 14px; color: grey;">{{skill.level}}</span
+        >&nbsp;&nbsp;
+        <p style="width: ; height: ;">
+          <a
+            href="{% url 'edit_skill' id=skill.id %}"
+            id="edit"
+            style="padding-bottom: 12px;"
+            ><i class="far fa-edit"></i></a
+          >&nbsp;&nbsp;
+          <a
+            href="{% url 'delete_skill' key=skill.id %}"
+            id="edit"
+            style="padding-bottom: 12px;"
+            ><i class="far fa-trash-alt"></i
+          ></a>
+        </p>
+      </div>
+      {% endfor %} {% else %}
+      <p>No Skills yet ??</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- <hr style="opacity: 0.2;"> -->
+
+  <div class="modal">
+    <div class="modal-content">
+      <span class="close-button">×</span>
+      <h3 style="margin-bottom: 20px;">
+        Add Skill &nbsp;<i class="far fa-edit"></i>
+      </h3>
+      <form method="POST" action="{% url 'add_skill' %}">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Skill Name" />
+
+        <select id="level" name="skill">
+          <option value="0">Beginner</option>
+          <option value="1">Intermediate</option>
+          <option value="2">Expert</option>
+        </select>
+
+        <input
+          type="submit"
+          name="submit"
+          value="Save"
+          style="
+            background-color: tomato;
+            border: none;
+            padding: 0px 12px;
+            height: 35px;
+            border-radius: 2px;
+          "
+        />
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var modal = document.querySelector(".modal");
+  var trigger = document.querySelector(".trigger");
+  var closeButton = document.querySelector(".close-button");
+
+  function toggleModal() {
+    modal.classList.toggle("show-modal");
+  }
+
+  function windowOnClick(event) {
+    if (event.target === modal) {
+      toggleModal();
+    }
+  }
+
+  trigger.addEventListener("click", toggleModal);
+  closeButton.addEventListener("click", toggleModal);
+  window.addEventListener("click", windowOnClick);
+</script>
+
+{% endblock %}

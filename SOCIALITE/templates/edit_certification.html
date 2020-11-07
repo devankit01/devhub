@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Certification</title>
+	<meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"/> -->
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js"></script> -->
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+
+  font-family: 'Poppins', sans-serif;
+}
+.container{
+	text-align: center;
+	background-color: #fff;
+	width: 380px;
+	height: 400px;
+	/*margin-top: 70px;*/
+	margin: 150px auto;
+	padding: 12px 14px;
+	border-radius: 4px;
+	box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+}
+form{
+	text-align: center;
+	display: inline-block;
+	width: 300px;
+	height: 470px;
+	margin: 40px auto;
+}
+input,select{
+	margin: 10px 0px;
+	padding: 4px 6px;
+	width: 280px;
+
+}
+
+#submit{
+	width: 120px;
+	height: 36px;
+	margin-top: 15px;
+	
+	background-color: #2ed573;
+	border: none;
+	border-radius: 3px;
+}
+#submit:hover{
+	color: #fff;
+	background-color: #000;
+	transition: 0.4s ease;
+}
+</style>
+</head>
+<body>
+     <div class="loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+<div class="container">
+	<h2 style="margin-bottom: -40px;padding: 14px 30px;font-size: 20px;">Edit Skill 📝📝📝</h2>
+	<form method="POST" >
+
+		{% csrf_token %}
+
+		<input type="text" name="name" placeholder="Certification Name" value="{{c.name}}">
+            <input type="text" name="organisation" placeholder="Organisation Name" value="{{c.organisation}}" >
+           <select id="level" name="month" >
+                  <option value="Jan" >Select</option>
+
+                  <option value="Jan" >January</option>
+                  <option value="Feb" >February</option>
+                  <option value="March" >March</option>
+                  <option value="April" >April</option>
+                  <option value="May" >May</option>
+                  <option value="June" >June</option>
+                  <option value="July" >July</option>
+                  <option value="Aug" >August</option>
+                  <option value="Sept" >September</option>
+                  <option value="Oct" >October</option>
+                  <option value="Nov" >November</option>
+                  <option value="Dec" >December</option>
+            <input type="text" name="year" placeholder="Year" value="{{c.year}}">
+            <input type="url" name="url" placeholder="Certificate URL" value="{{c.url}}"> 
+
+		
+        	
+
+        	<input type="submit" name="submit" value="Update" style="background-color: tomato;border: none;padding: 0px 12px;height: 35px;border-radius: 2px;">
+	
+
+	</form>
+</div>
+</body>
+</html>

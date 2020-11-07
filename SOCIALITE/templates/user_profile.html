@@ -1,0 +1,285 @@
+{% extends 'dashboard.html' %}
+{% block head %}
+<title>Profile</title>
+{% endblock head %}
+{% block css %}
+.wrap{
+  width:65%;
+  height:auto;
+  margin:0px auto;
+  padding-top: 50px;
+}
+.parent{
+display: flex;
+ justify-content:center;
+
+}
+.parent-two{
+display: flex;
+ justify-content:center;
+
+}
+.div1,.div2{
+  height:200px;
+  width:100%;
+  margin:20px;
+}
+.child1,.child2{
+  height:auto;
+  width:100%;
+  margin:20px;
+}
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 2px;
+}
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: ;
+}
+.close-button:hover {
+    background-color: darkgray;
+}
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+
+@media only screen and (max-width: 600px) {
+.parent{
+display: flex;
+  flex-direction: column;
+}
+.parent-two{
+display: flex;
+  flex-direction: column;
+}
+.child2{
+  margin-top:-20px;
+}
+.div2{
+  margin-top:-90px;
+  height:210px;
+
+
+}
+.div1{
+  height:60px;
+  padding-right:120px;
+  
+}
+#edit{
+  margin-left:250px;
+
+}
+#edit-btn{
+  background-color:transparent;
+  border:none;
+  margin-top:0px!important;
+  outline:none;
+
+}
+hr{
+  display:none;
+}
+.wrap{
+  width:75%;
+  height:auto;
+  margin:0px auto;
+  padding-top: 50px;
+}
+}
+
+#edit-btn{
+  background-color:transparent;
+  border:none;
+  outline:none;
+  height:40px;
+  <!-- background:red; -->
+
+  margin-top:100px;
+}
+
+
+input,textarea{
+  margin: 10px 14px;
+  padding: 4px 6px;
+  width: 300px;
+
+  /*margin-left: 30px;*/
+}
+
+{% endblock %}
+
+
+{% block body %}
+<div class="wrap" >
+
+
+<h1 style="">Profile Info</h1>
+<div class="parent">
+<div class="div1" style="background-color: ;">
+ <h1 style="border-radius: 50%;width:80px;height: 80px;margin: 30px auto;border: 2px solid #000;padding-top: 15px;padding-left: 15px;margin-top: 45px;">{{context.user_icon}}</h1> 
+</div>
+<div class="div2" style="margin-top: 70px;">
+<h2>{{ z.first_name }} {{ z.last_name }}</h2>
+<p style="margin-top: 6px;margin-left: ; font-size: 22px;"><a href="{{z.profile.fb}}" style="color: #000;"><i class="fab fa-facebook"></i></a> 
+          <a href="{{z.profile.lkd}}" style="color: #000;"><i class="fab fa-linkedin"></i></a>
+          <a href="{{z.profile.git}}" style="color: #000;"><i class="fab fa-github"></i></a>
+          <a href="{{z.profile.hacker}}" style="color: #000;"><i class="fab fa-hackerrank"></i></a>
+            <p style="font-size: 13px;margin-top: 6px;"> <b>Connections : {{following}} </b> </p>
+        </p>
+<p style="margin-top: 5px;margin-bottom:10px;">{{z.profile.bio}}</p>
+<div style="width:100px; background:tomato!important;height:auto;padding:8px 10px;border-radius:3px;color:#000!important;box-shadow:2px 2px 10px rgba(0,0,0,0.3);">
+<a href="{% url 'follow' id=z.id %}" id="follow" style="text-decoration:none;color:#000;font-size:14px;text-align:center;">
+{% if  is_follow %}
+<p style="">Disconnect</p>
+{% else %}
+<p>Connect</p>
+{% endif %}
+</a>
+</div>
+
+ </div>
+
+
+
+<!--  -->
+</div>
+
+  <!-- <hr style="color: rgb(0,0,0,0.1);margin-top: 10px;opacity: 0.2;z-index: -2;"> -->
+  <h1 style="margin-top: 30px;">Skills</h1>
+  <div class="parent-two">
+    <div class="child1">
+      {% for i in a %}
+      <div style="margin-bottom: 14px;">
+      <p style="font-size: 18px;"><b>{{i.name}}<span style="font-size: 15px;"> {{i.emoji}} </span></b></p>
+      <span style="font-size: 14px;color: grey;">{{i.level}}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="child2">
+        {% for i in b %}
+      <div style="margin-bottom: 14px;">
+      <p style="font-size: 18px;"><b>{{i.name}}<span style="font-size: 15px;"> {{i.emoji}} </span></b></p>
+      <span style="font-size: 14px;color: grey;">{{i.level}}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    
+  </div>
+
+
+  <h1 style="margin-top: 30px;margin-bottom: 6px;">Certifications</h1>
+  <div class="parent-two">
+<div class="child1">
+  {% for c in x %}
+    <div style="margin-bottom: 14px;">
+       <p style="font-size: 18px;"><b>{{c.name}} 🏅</b></p>
+            <span style="font-size: 14px;color: grey;">{{c.organisation}} on {{c.month_name}} {{c.year}}</span><br>
+            <a href="{{c.url}}" style="font-size: 13px;">See Certificate</a>
+                        <p>
+
+      </div>
+  {% endfor %}
+  </div>
+
+<div class="child2">
+  {% for c in y %}
+    <div style="margin-bottom: 14px;">
+       <p style="font-size: 18px;"><b>{{c.name}} 🏅</b></p>
+            <span style="font-size: 14px;color: grey;">{{c.organisation}} on {{c.month_name}} {{c.year}}</span><br>
+            <a href="{{c.url}}" style="font-size: 13px;">See Certificate</a>
+                        <p>
+
+      </div>
+  {% endfor %}
+  </div>
+
+  
+    
+  </div>
+</div>
+    <script type="text/javascript">
+
+
+   $("#follow").click(function (e) {
+        var id = this.id;
+        var href = this.href;
+
+        console.log(href, id);
+        e.preventDefault();
+
+        $.ajax({
+          url: href,
+          success : function(response){
+          console.log(response);
+
+            if(response['following'])
+            {
+              console.log('Unfollow');
+              document.querySelector('#follow').innerHTML = '<p>Disconnect</p>';
+
+            }
+            else{
+              console.log('Follow')
+              document.querySelector('#follow').innerHTML = '<p>Connect</p>';
+
+            }
+          }
+
+        });
+
+       
+      });
+
+    
+var modal = document.querySelector(".modal");
+var trigger = document.querySelector(".trigger");
+var closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+
+
+   </script>
+
+{% endblock %}
+    
