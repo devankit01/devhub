@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
 
     {% block head %}
-    <title>Dashboard</title>
+    <title>Add Comment</title>
     {% endblock head %}
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -31,126 +31,16 @@
         height: 45px;
         width: 45px;
         text-align: center;
-        background: black;
+        background: #fff;
         border-radius: 3px;
+        font-size: 20px;
+        font-weight: bold;
         cursor: pointer;
         color: black;
         transition: left 0.4s ease;
       }
-      .btn.click{
-        left: 260px;
-      }
-      .btn span{
-        color: white;
-        font-size: 28px;
-        line-height: 45px;
-      }
-      .btn.click span:before{
-        content: '\f00d';
-      }
-      .sidebar{
-        position: fixed;
-        width: 250px;
-        height: 100%;
-        left: -250px;
-        background: tomato;
-        transition: left 0.4s ease;
-      }
-      .sidebar.show{
-        left: 0px;
-      }
-      .sidebar .text{
-        color: white;
-        font-size: 25px;
-        font-weight: 600;
-        line-height: 65px;
-        text-align: center;
-        background: tomato;
-        letter-spacing: 1px;
-      }
-      nav ul{
-        background: white;
-        height: 100%;
-        width: 100%;
-        list-style: none;
-        z-index: 100;
-        padding-top: 10px;
-      }
-      nav ul li{
-        line-height: 42px;
-        border-top: 1px solid rgba(255,255,255,0.1);
-      }
-      nav ul li:last-child{
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-      }
-      nav ul li a{
-        position: relative;
-        color: black;
-        text-decoration: none;
-        font-size: 18px;
-        padding-left: 40px;
-        font-weight: 500;
-        display: block;
-        width: 100%;
-        border-left: 3px solid transparent;
-      }
-      nav ul li.active a{
-        color: tomato;
-        /* background: ; */
-        border-left-color: cyan;
-      }
-      nav ul li a:hover{
-        background: #1e1e1e;
-        color: white;
-      }
-      nav ul ul{
-        position: static;
-        display: none;
-      }
-      nav ul .feat-show.show{
-        display: block;
-      }
-      nav ul .serv-show.show1{
-        display: block;
-      }
-      nav ul ul li{
-        line-height: 42px;
-        border-top: none;
-      }
-      nav ul ul li a{
-        font-size: 17px;
-        color: #000;
-        padding-left: 80px;
-      }
-      /*nav ul li.active ul li a{
-        color: #e6e6e6;
-        background: #1b1b1b;
-        border-left-color: transparent;
-      }*/
-      nav ul ul li a:hover{
-        color: cyan!important;
-        background: #1e1e1e!important;
-      }
-      nav ul li a span{
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        font-size: 22px;
-        transition: transform 0.4s;
-      }
-      /*nav ul li a span.rotate{
-        transform: translateY(-50%) rotate(-180deg);
-      }*/
-      .content{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        color: #202020;
-        z-index: -1;
-        text-align: center;
-      }
+
+
       .content .header{
         font-size: 45px;
         font-weight: 600;
@@ -219,33 +109,64 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #555;
       }
+
+      .add-comment-box{
+
+        width: 350px;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        margin-bottom:  20px;
+
+        padding: 20px 20px;
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+        /*right: 0;*/
+      }
+      .wrap-comment{
+        width:350px;
+        height: auto;
+        margin: 0 auto;
+
+      }
+      input{
+        /*margin: 10px 10px;*/
+        padding: 4px 6px;
+        width: 210px;
+
+      }
       {% block css %}
       {% endblock css %}
     </style>
   </head>
   <body>
+    <div class="loader-wrapper">
+      <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    <div class="btn">
+      <a href="{%  url 'dashboard' %}" style="text-decoration: none;"
+        ><span class="">&larr;</span></a
+      >
+    </div>
 
-    {% include 'sidebar.html' %}
     <!-- Body -->
 
     {% block body %}
-    <h2 style="margin-left: 70px; padding-top: 20px;">Posts</h2>
     <div
       class="posts"
       style="
         width: 360px;
-        height: auto;
+        height: 300px;
         margin: 0 auto;
         padding: 5px;
-        padding-top: 30px;;
+        padding-top: 60px;
+        padding-bottom: 100px;
       "
     >
-      {% for post,count,comment in data %}
       <div
         class="card"
         style="
           padding-bottom: 40px;
-          box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.1);
           padding: 10px 20px;
           margin: 10px 0px;
         "
@@ -258,7 +179,7 @@
           >
             <h3>
               <a
-                href="{% url 'user_profile' id=post.username.id %}"
+                href="{% url 'user_profile' id=post.username.pk %}"
                 style="color: #000; text-decoration: none;"
                 >{{post.username.first_name}}&nbsp;{{post.username.last_name}}</a
               >
@@ -298,38 +219,91 @@
             "
           >
             <!-- Great Logic by me -->
-            <a
-              href="{% url 'like_dislike_post'  %}"
-              id="{{post.id}}"
-              class="like"
-              ><span id="heart-btn-{{post.id}}"
-                >{% if post.id in liked_post %}<i
-                  class="fas fa-heart"
-                  style="color: red;"
-                ></i
-                >{% else %}<i class="far fa-heart"></i>{% endif %}</span
-              ></a
-            >
+            <!--  <a href="{% url 'like_dislike_post'  %}" id="{{post.id}}" class="like" ><span id="heart-btn-{{post.id}}">{% if post.id in liked_post %}<i class="fas fa-heart" style="color: red"></i>{% else %}<i class="far fa-heart"></i>{% endif %}</span></a> -->
 
-            &nbsp;&nbsp;<a href="{% url 'comment_post' id=post.id %}"
-              ><i class="far fa-comment"></i></a
-            ><span style="float: right; font-size: 14px; padding-top: 4px;"
-              ><span id="like-count-{{post.id}}">{{ count }}</span> Likes
-              {{comment}} Comments</span
+            &nbsp;&nbsp;<span
+              style="float: right; font-size: 14px; padding-top: 4px;"
+              ><span id="like-count-{{post.id}}">{{ c }}</span> Likes {{l}}
+              Comments</span
             >
           </p>
 
           <!-- <p style="font-size: 12px;">Maneet Srivastav <span style="font-size: 10px;">Great Job ❤</span></p> -->
         </div>
+      </div>
 
-        <div class="strip">
-          <!-- <p style="font-size: 13px;padding: 0 10px;">12 Likes </p> -->
+      {% for comment in y %}
 
-          <!-- <hr> -->
+      <div
+        class="comments{{comment.id}}"
+        style="
+          width: 100%;
+          height: auto;
+          box-shadow: 2px 2px 18px rgba(0, 0, 0, 0.1);
+          padding: 5px 10px;
+          margin-bottom: 10px;
+        "
+      >
+        <div class="box">
+          <h4>
+            {{comment.username.first_name}} {{comment.username.last_name}}
+          </h4>
+          <p style="font-size: 14px;">{{comment.comment_text}}</p>
+          {% if comment.id in lst %}
+          <a
+            href="{% url 'delete_comment' id=comment.id %}"
+            id="{{comment.id}}"
+            class="deletec"
+            style="float: right; margin-top: -20px;"
+            ><i class="far fa-trash-alt"></i
+          ></a>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
+      <div
+        class="comments"
+        style="
+          width: 100%;
+          height: 100px;
+          padding: 5px 10px;
+          margin-bottom: 10px;
+        "
+      >
+        <div class="box">
+          <h4></h4>
+          <p style="font-size: 14px;"></p>
+        </div>
+      </div>
     </div>
+
+    <div class="wrap-comment">
+      <div class="add-comment-box">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="comment"
+            placeholder="Type your Comment..."
+            required=""
+          /><button
+            type="submit"
+            style="
+              width: 70px;
+              margin-left: 22px !important;
+              background-color: tomato;
+              border: none;
+              padding: 6px 8px;
+              border-radius: 3px;
+              box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            "
+          >
+            Add ➕
+          </button>
+        </form>
+      </div>
+    </div>
+
     {% endblock body %}
 
     <!-- Post -->
@@ -337,9 +311,9 @@
     <!--  -->
 
     <script>
-      //using ajax
+      // using ajax
 
-      $(".like").click(function (e) {
+      $(".deletec").click(function (e) {
         var id = this.id;
         var href = this.href;
 
@@ -348,38 +322,10 @@
 
         $.ajax({
           url: href,
-          data: { likedId: id },
-
-          success: function (response) {
-            console.log(response);
-
-            if (response.counter) {
-              console.log("Likes");
-              console.log(document.querySelector("#heart-btn-" + id));
-              document.querySelector("#heart-btn-" + id).innerHTML =
-                '<i class="fas fa-heart" style="color:red;"></i>';
-              c = document.querySelector("#like-count-" + id).innerHTML;
-              document.querySelector("#like-count-" + id).innerHTML =
-                Number(document.querySelector("#like-count-" + id).innerHTML) +
-                1;
-              console.log(c);
-              console.log(c.innerHTML);
-
-              console.log();
-            } else {
-              console.log("Disliked");
-              console.log(document.querySelector("#heart-btn"));
-              document.querySelector("#heart-btn-" + id).innerHTML =
-                '<i class="far fa-heart"></i>';
-              c = document.querySelector("#like-count-" + id).innerHTML;
-              document.querySelector("#like-count-" + id).innerHTML =
-                Number(document.querySelector("#like-count-" + id).innerHTML) -
-                1;
-            }
-          },
+          data: {},
         });
 
-        // $("#"+id).fadeOut(1000);
+        $(".comments" + id).fadeOut(1000);
       });
 
       $(".btn").click(function () {

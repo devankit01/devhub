@@ -6,50 +6,49 @@ import math
 import json
 
 # Create your views here.
-
+def home(request):
+    return render(request, 'social/index.html')
 
 def signup(request):
     if request.method == "POST":
         if request.POST['pass1'] == request.POST['pass2']:
             try:
                 email = request.POST['email']
+                # email = email[0:-10]
                 user = User.objects.filter(email=email)
                 if len(user) == 0:
                     raise User.DoesNotExist
-                return render(request, 'accounts/signup.html', {'msg': 'Email already exists 🔑', 'c': 'red'})
+                return render(request, 'social/accounts/signup.html', {'msg': 'Email already exists 🔑', 'c': 'red'})
             except User.DoesNotExist:
+                username = request.POST['email'][0:-10]
                 user_obj = User.objects.create_user(first_name=request.POST['fname'], last_name=request.POST['lname'],
-                                                    username=request.POST['email'], password=request.POST['pass1'], email=request.POST['email'])
+                                                    username=username, password=request.POST['pass1'], email=request.POST['email'])
                 print(user_obj)
                 user_obj.save()
                 new_prof = Profile(username=user_obj, fb="",
                                    lkd="", git="", hacker="", bio="")
                 new_prof.save()
                 print(new_prof)
-                new_resume = Resume(resume = "", portfolio = "", username = user_obj )
+                new_resume = Resume(resume="", portfolio="", username=user_obj)
                 new_resume.save()
-                return render(request, 'accounts/signup.html', {"msg": 'Account Created 🔑', 'c': 'green'})
+                return redirect('signin')
 
         else:
-            return render(request, 'accounts/signup.html', {'msg_pass': "Password do not matched ❌"})
+            return render(request, 'social/accounts/signup.html', {'msg_pass': "Password do not matched ❌"})
     else:
-        return render(request, 'accounts/signup.html')
-    return render(request, 'accounts/signup.html')
+        return render(request, 'social/accounts/signup.html')
+    return render(request, 'social/accounts/signup.html')
 
 
 def signin(request):
-    try:
-        if request.session['is_login'] == True:
-            print(request.session['is_login'])
-        else:
-            print(request.session['is_login'])
-            pass
-    except:
-        pass
+
     if request.method == 'POST':
         try:
             # Check User in DB
-            uname = request.POST['email']
+            uname = request.POST['username']
+            print(uname)
+            uname = uname[0:-10]
+            print(uname)
             pwd = request.POST['pass1']
             print(uname, pwd)
             User.objects.get(username=uname)
@@ -58,16 +57,14 @@ def signin(request):
                 auth.login(request, user_authenticate)
                 request.session['username'] = uname
                 print('Successfully Login')
-                # request.session['is_login'] = True
-                # print(request.session['is_login'])
                 return redirect('dashboard')
 
             else:
                 print('Login Failed')
-                return render(request, 'accounts/signin.html', {"msg": "Invalid Credentials ❌"})
+                return render(request, 'social/accounts/signin.html', {"msg": "Invalid Credentials ❌"})
         except:
-            return render(request, 'accounts/signin.html')
-    return render(request, 'accounts/signin.html')
+            return render(request, 'social/accounts/signin.html')
+    return render(request, 'social/accounts/signin.html')
 
 
 def dashboard(request):
@@ -130,7 +127,7 @@ def dashboard(request):
         posts = posts
         how_many = like_list
         data = zip(posts, how_many, get_comment)
-        return render(request, 'dashboard.html', {'d': context, 'data': data, 'p': p, 's': s, 'posts': posts, 't': t, 'liked_post': liked_post, 'like_list': like_list})
+        return render(request, 'social/dashboard.html', {'d': context, 'data': data, 'p': p, 's': s, 'posts': posts, 't': t, 'liked_post': liked_post, 'like_list': like_list})
 
     else:
         return HttpResponse('Error 404')
@@ -175,7 +172,7 @@ def profile(request):
             following = 0
 
         print('Following=', following)
-        return render(request, 'profile.html', {'d': context, 'p': p, 's': s, 'a': a, 'b': b, 'x': x, 'y': y, 'following': following})
+        return render(request, 'social/profile.html', {'d': context, 'p': p, 's': s, 'a': a, 'b': b, 'x': x, 'y': y, 'following': following})
 
     except:
         return HttpResponse('Error 404')
@@ -223,7 +220,7 @@ def skills(request):
         print(s)
     except:
         pass
-    return render(request, 'skills.html', {'d': context, 'p': p, 's': s})
+    return render(request, 'social/skills.html', {'d': context, 'p': p, 's': s})
 
 
 def add_skill(request):
@@ -283,7 +280,7 @@ def edit_skill(request, id):
             s.save()
             return redirect('/user/skills')
         s = Skill.objects.get(id=id)
-        return render(request, 'edit_skill.html', {'s': s})
+        return render(request, 'social/edit_skill.html', {'s': s})
     except:
         return HttpResponse('Error 404')
 
@@ -323,7 +320,7 @@ def certifications(request):
             print(c)
         except:
             pass
-        return render(request, 'certifications.html', {'d': context, 'p': p, 'c': c})
+        return render(request, 'social/certifications.html', {'d': context, 'p': p, 'c': c})
     except:
         return HttpResponse('Error 404')
 
@@ -357,7 +354,7 @@ def edit_certification(request, id):
         c.save()
         return redirect('/user/certifications')
     # s = Skill.objects.get(id=id)
-    return render(request, 'edit_certification.html', {'c': c})
+    return render(request, 'social/edit_certification.html', {'c': c})
 
 
 def delete_certification(request, id):
@@ -419,7 +416,7 @@ def posts(request):
     k = zip(po, l, m)
     print("data", po, l, m)
 
-    return render(request, 'post.html', {'d': context, 'p': p, 'k': k, 'post': po})
+    return render(request, 'social/post.html', {'d': context, 'p': p, 'k': k, 'post': po})
 
 
 def add_post(request):
@@ -460,7 +457,7 @@ def edit_post(request, id):
         p.save()
         return redirect('/user/posts')
     # s = Skill.objects.get(id=id)
-    return render(request, 'edit_post.html', {'p': p})
+    return render(request, 'social/edit_post.html', {'p': p})
 
 
 def delete_post(request, id):
@@ -487,7 +484,7 @@ def logout(request):
         del request.session['username']
     except:
         pass
-    return redirect('signup')
+    return redirect('signin')
 
 
 def user_profile(request, id):
@@ -497,11 +494,13 @@ def user_profile(request, id):
     print(obj)
     user = User.objects.get(username=obj)
 
-    if str(id) != str(user.id):
+    if str(id) != str(user):
         if not request.user.is_authenticated:
             return redirect('accounts/signin')
 
-        p_user = User.objects.get(id=id)
+        # updated
+        p_user = User.objects.get(username=id)
+
         x = Profile.objects.get(username=p_user)
         z = User.objects.get(profile=x)
         print(z.first_name)
@@ -539,7 +538,7 @@ def user_profile(request, id):
         p = Profile.objects.get(username=user)
         main_user = request.user
         try:
-            to_follow = User.objects.get(id=id)
+            to_follow = User.objects.get(username=id)
             is_follow = Following.objects.filter(
                 username=main_user, followed=to_follow)
             print(is_follow)
@@ -553,7 +552,7 @@ def user_profile(request, id):
             print('Follower==========', following)
         except:
             following = 0
-        return render(request, 'user_profile.html', {'z': z, 'd': context, 'p': p, 'context': context_p, 'a': a, 'b': b, 'x': x, 'y': y, 'following': following, 'is_follow': is_follow})
+        return render(request, 'social/user_profile.html', {'z': z, 'd': context, 'p': p, 'context': context_p, 'a': a, 'b': b, 'x': x, 'y': y, 'following': following, 'is_follow': is_follow})
     else:
         return redirect('/user/profile')
 
@@ -581,9 +580,6 @@ def like_dislike_post(request):
     }
     response = json.dumps(resp)
     return HttpResponse(response, content_type='application/json')
-
-
-
 
     post = Post.objects.get(id=id)
     if request.method == "POST":
@@ -638,75 +634,77 @@ def like_dislike_post(request):
         all_comments = []
 
         # Delete Option
-        data = Comment.objects.filter(username=request.session['username'], post=post)
+        data = Comment.objects.filter(
+            username=request.session['username'], post=post)
         lst = []
         for k in data:
             lst.append(k.id)
         print(lst)
         y = y[::-1]
-        return render(request, 'add_comment.html', {'post': post, 'c': c, 'l': l, 'y': y, 'lst': lst})
+        return render(request, 'social/add_comment.html', {'post': post, 'c': c, 'l': l, 'y': y, 'lst': lst})
 
-def comment_post(request , id):
-    
+
+def comment_post(request, id):
+
 	post = Post.objects.get(id=id)
 	if request.method == "POST":
-		comment = Comment(comment_text = request.POST['comment'] , post = post , username = request.user)
+		comment = Comment(
+		    comment_text=request.POST['comment'], post=post, username=request.user)
 		print(comment)
 		comment.save()
 
 		try:
-			c = Like.objects.get(post = post)
+			c = Like.objects.get(post=post)
 			print(c.username.count())
 			c = c.username.count()
 		except:
 			c = 0
 
 		try:
-			y = Comment.objects.filter(post = post)
+			y = Comment.objects.filter(post=post)
 			print(y)
 			l = len(y)
 			print(l)
 		except:
-			l=0
-		y=y[::-1]
+			l = 0
+		y = y[::-1]
 		all_comments = []
 		for i in y:
 			print(i.comment_text)
 			all_comments.append(i.comment_text)
-		data = Comment.objects.filter(username = request.user, post = post)
+		data = Comment.objects.filter(username=request.user, post=post)
 		lst = []
 		for k in data:
 			lst.append(k.id)
 		print(lst)
-		return render(request , 'add_comment.html',{'post':post , 'c':c , 'l':l ,'y':y,'lst':lst})
-
+		return render(request, 'social/add_comment.html', {'post': post, 'c': c, 'l': l, 'y': y, 'lst': lst})
 
 	else:
 		try:
-			c = Like.objects.get(post = post)
+			c = Like.objects.get(post=post)
 			print(c.username.count())
 			c = c.username.count()
 		except:
 			c = 0
 
 		try:
-			y = Comment.objects.filter(post = post)
+			y = Comment.objects.filter(post=post)
 			print(y)
 			l = len(y)
 			print(l)
 		except:
-			l=0
+			l = 0
 
 		all_comments = []
 
 		# Delete Option
-		data = Comment.objects.filter(username = request.user, post = post)
+		data = Comment.objects.filter(username=request.user, post=post)
 		lst = []
 		for k in data:
 			lst.append(k.id)
 		print(lst)
-		y=y[::-1]
-		return render(request , 'add_comment.html',{'post':post , 'c':c , 'l':l ,'y':y,'lst':lst})
+		y = y[::-1]
+		return render(request, 'social/add_comment.html', {'post': post, 'c': c, 'l': l, 'y': y, 'lst': lst})
 
 
 def delete_comment(request, id):
@@ -719,29 +717,27 @@ def delete_comment(request, id):
 
 
 def follow(request, id):
+	main_user = request.user
+	to_follow = User.objects.get(id=id)
 
-    main_user = request.session['username']
-    to_follow = User.objects.get(id=id)
+	following = Following.objects.filter(username=main_user, followed=to_follow)
+	print(following)
 
-    following = Following.objects.filter(
-        username=main_user, followed=to_follow)
-    print(following)
+	is_following = True if following else False
 
-    is_following = True if following else False
+	if is_following:
+		print(main_user, to_follow)
+		Following.unfollow(main_user, to_follow.id)
+		is_following = False
+	else:
+		Following.follow(main_user, to_follow)
+		is_following = True
 
-    if is_following:
-        print(main_user, to_follow)
-        Following.unfollow(main_user, to_follow.id)
-        is_following = False
-    else:
-        Following.follow(main_user, to_follow)
-        is_following = True
-
-    resp = {
-        'following': is_following,
-    }
-    response = json.dumps(resp)
-    return HttpResponse(response, content_type='application/json')
+	resp = {
+		'following': is_following,
+	}
+	response = json.dumps(resp)
+	return HttpResponse(response, content_type='application/json')
 
 
 
@@ -786,7 +782,7 @@ def myresume(request):
                 'icon': str(f[0].upper()+l[0].upper()),
                 'name': str(f+' '+l)
             }
-            return render(request, 'resume.html',{'d': context})
+            return render(request, 'social/resume.html',{'d': context})
     except:
         return HttpResponse('Error 404')
 

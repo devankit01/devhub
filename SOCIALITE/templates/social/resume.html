@@ -1,7 +1,6 @@
-{% extends 'dashboard.html' %} {% block head %}
-<title>Skills</title>
-{% endblock head %} {% block css %} 
-.wrap{ width:60%; height:auto; margin:0px
+{% extends 'social/dashboard.html' %} {% block head %}
+<title>DevHub | My Resume</title>
+{% endblock head %} {% block css %} .wrap{ width:60%; height:auto; margin:0px
 auto; padding-top: 50px; } .parent{ display: flex; justify-content:center; }
 .parent-two{ display: flex; justify-content:center; } .div1,.div2{ height:200px;
 width:100%; margin:20px; } .child1,.child2{ height:200px; width:100%;
@@ -40,11 +39,11 @@ margin-top:100px; } input,select{ margin: 10px 14px; padding: 4px 6px; width:
 300px; /*margin-left: 30px;*/ } {% endblock %} {% block body %}
 <div class="wrap">
   <!-- <hr style="color: rgb(0,0,0,0.1);margin-top: 10px;opacity: 0.2;z-index: -2;"> -->
-  <h1 style="margin-top: 30px; font-size: 30px;">Skills</h1>
+  <h1 style="margin-top: 30px; font-size: 30px">Resume</h1>
 
   <div
     class="trigger"
-    style="margin-top: -42px; margin-left: 0px; float: right;"
+    style="margin-top: -42px; margin-left: 0px; float: right"
   >
     <button
       style="
@@ -52,44 +51,44 @@ margin-top:100px; } input,select{ margin: 10px 14px; padding: 4px 6px; width:
         background-color: tomato;
         height: 35px;
         padding: 4px 8px;
-        width: 120px;
+        width: 60px;
         border-radius: 2px;
         box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
       "
     >
-      Add Skill
+      Add
     </button>
   </div>
   <div class="parent-two">
     <div class="child1">
       {% if s %} {% for skill in s %}
-      <div style="margin-bottom: 14px;">
-        <p style="font-size: 18px;">
+      <div style="margin-bottom: 14px">
+        <p style="font-size: 18px">
           <b
-            >{{skill.name}}<span style="font-size: 15px;">
+            >{{skill.name}}<span style="font-size: 15px">
               {{skill.emoji}}
             </span></b
           >
         </p>
-        <span style="font-size: 14px; color: grey;">{{skill.level}}</span
+        <span style="font-size: 14px; color: grey">{{skill.level}}</span
         >&nbsp;&nbsp;
-        <p style="width: ; height: ;">
+        <p style="width: ; height: ">
           <a
             href="{% url 'edit_skill' id=skill.id %}"
             id="edit"
-            style="padding-bottom: 12px;"
+            style="padding-bottom: 12px"
             ><i class="far fa-edit"></i></a
           >&nbsp;&nbsp;
           <a
             href="{% url 'delete_skill' key=skill.id %}"
             id="edit"
-            style="padding-bottom: 12px;"
+            style="padding-bottom: 12px"
             ><i class="far fa-trash-alt"></i
           ></a>
         </p>
       </div>
       {% endfor %} {% else %}
-      <p>No Skills yet ??</p>
+      <p>Not uploaded yet ??</p>
       {% endif %}
     </div>
   </div>
@@ -99,19 +98,17 @@ margin-top:100px; } input,select{ margin: 10px 14px; padding: 4px 6px; width:
   <div class="modal">
     <div class="modal-content">
       <span class="close-button">×</span>
-      <h3 style="margin-bottom: 20px;">
-        Add Skill &nbsp;<i class="far fa-edit"></i>
+      <h3 style="margin-bottom: 20px">
+        Add Resume &nbsp;<i class="far fa-edit"></i>
       </h3>
-      <form method="POST" action="{% url 'add_skill' %}">
+      <form method="POST">
         {% csrf_token %}
-        <input type="text" name="name" placeholder="Skill Name" />
-
-        <select id="level" name="skill">
-          <option value="0">Beginner</option>
-          <option value="1">Intermediate</option>
-          <option value="2">Expert</option>
-        </select>
-
+        <input type="url" name="resume" placeholder="Resume Link" />
+        <input
+          type="url"
+          name="portfolio"
+          placeholder="Personal website or Portfolio Link"
+        />
         <input
           type="submit"
           name="submit"

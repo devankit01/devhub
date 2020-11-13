@@ -1,6 +1,7 @@
-{% extends 'dashboard.html' %}
+{% extends 'social/dashboard.html' %}
+
 {% block head %}
-<title>Profile</title>
+<title>DevHub | User Profile</title>
 {% endblock head %}
 {% block css %}
 .wrap{
@@ -204,7 +205,7 @@ input,textarea{
        <p style="font-size: 18px;"><b>{{c.name}} 🏅</b></p>
             <span style="font-size: 14px;color: grey;">{{c.organisation}} on {{c.month_name}} {{c.year}}</span><br>
             <a href="{{c.url}}" style="font-size: 13px;">See Certificate</a>
-                        <p>
+                        <p style="width: ;height: ;">
 
       </div>
   {% endfor %}
@@ -216,7 +217,7 @@ input,textarea{
        <p style="font-size: 18px;"><b>{{c.name}} 🏅</b></p>
             <span style="font-size: 14px;color: grey;">{{c.organisation}} on {{c.month_name}} {{c.year}}</span><br>
             <a href="{{c.url}}" style="font-size: 13px;">See Certificate</a>
-                        <p>
+                        <p style="width: ;height: ;">
 
       </div>
   {% endfor %}

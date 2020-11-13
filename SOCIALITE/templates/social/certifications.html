@@ -1,6 +1,6 @@
-{% extends 'dashboard.html' %}
+{% extends 'social/dashboard.html' %}
 {% block head %}
-<title>Post</title>
+<title>DevHub | Certifications</title>
 {% endblock head %}
 {% block css %}
 .wrap{
@@ -150,12 +150,6 @@ outline:none;
 hr{
 display:none;
 }
-.wrap{
-width:75%;
-height:auto;
-margin:0px auto;
-padding-top: 50px;
-}
 }
 
 #edit-btn{
@@ -163,13 +157,11 @@ background-color:transparent;
 border:none;
 outline:none;
 height:40px;
-<!-- background:red; -->
-
 margin-top:100px;
 }
 
 
-input,textarea{
+input,select{
 margin: 10px 14px;
 padding: 4px 6px;
 width: 300px;
@@ -187,58 +179,78 @@ width: 300px;
 
 
     <!-- <hr style="color: rgb(0,0,0,0.1);margin-top: 10px;opacity: 0.2;z-index: -2;"> -->
-    <h1 style="margin-top: 30px;font-size: 24px;margin-right: 10px;">Posts</h1>
+    <h1 style="margin-top: 30px;font-size: 24px;margin-right: 10px;">Certificates</h1>
 
-    <div class="trigger" style="margin-top:-36px; ;margin-left: 0px;float: right;">
+    <div class="trigger" style="margin-top:-36px; margin-left: 0px;float: right;">
         <button
-            style="border: none;background-color: tomato;height: 35px;padding: 4px 8px;width: 80px;border-radius: 2px;box-shadow: 4px 4px 15px rgba(0,0,0,0.2);margin-left: 30px!important;">Add
-            Post </button>
+            style="border: none;background-color: tomato;height: 35px;padding: 4px 8px;width: 60px;border-radius: 2px;box-shadow: 4px 4px 15px rgba(0,0,0,0.2);margin-left: 30px!important;">Add
+        </button>
 
     </div>
-    <div style="margin-top: 50px;"></div>
+    <div class="parent-two" style="margin-top: 30px;">
+        <div class="child1">
+            {% if c %}
+            {% for cer in c %}
+            <div style="margin-bottom: 10px;">
+                <p style="font-size: 18px;"><b>{{cer.name}} 🏅</b></p>
+                <span style="font-size: 14px;color: grey;">{{cer.organisation}} on {{cer.month_name}}
+                    {{cer.year}}</span><br>
+                <a href="{{cer.url}}" style="font-size: 13px;color: blue;">See Certificate</a>
+                <p>
+                    <a href="{% url 'edit_certification' id=cer.id %}" id="edit" style="padding-bottom: 12px;"><i
+                            class="far fa-edit"></i></a>&nbsp;&nbsp;
+                    <a href="{% url 'delete_certification' id=cer.id %}" id="edit" style="padding-bottom: 12px;"><i
+                            class="far fa-trash-alt"></i></a>
+                </p>
+            </div>
 
-    {% if k %}
-    {%   for po in post %}
-    <div class="post-card" id="{{po.id}}" style="width: 100%;
-          height: auto; padding:30px 20px;box-shadow: 4px 4px 20px rgba(0,0,0,0.2);margin-top: 10px;">
-        <p>{{po.content}}</p>
-        <p style="font-size: 12px;color: teal;">{{po.date}}</p>
-        <p style="padding-top: 15px;"><span style="float: right;">
+            {% endfor %}
 
-                <a href="{% url 'edit_post' id=po.id %}" id=""><i class="far fa-edit"></i></a> &nbsp; &nbsp;
+        </div>
 
-                <a href="{% url 'delete_post' id=po.id %}" id="{{posts.id}}" class="delete"> <i
-                        class="far fa-trash-alt"></i></a></span></p>
+        {% else %}
+        <p>No certifications yet ??</p>
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    <p>No posts yet </p>
-    {% endif %}
-
-
 </div>
 
 
 
-<!-- <hr style="opacity: 0.2;"> -->
 
 
 <div class="modal">
     <div class="modal-content">
         <span class="close-button">×</span>
-        <h3 style="margin-bottom: 20px;margin-top: 20px;">Add Post &nbsp;<i class="far fa-edit"></i></h3>
-        <form method="POST" action="{% url 'add_post' %}" enctype="multipart/form-data">
+        <h3 style="margin-bottom: 20px;margin-top: 20px;">Add Certification &nbsp;<i class="far fa-edit"></i></h3>
+        <form method="POST" action="{% url 'add_certification' %}">
             {% csrf_token %}
+            <input type="text" name="name" placeholder="Certification Name">
+            <input type="text" name="organisation" placeholder="Organisation Name">
+            <select id="level" name="month">
+                <option value="Jan">Select</option>
+
+
+                <option value="Jan">January</option>
+                <option value="Feb">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="Aug">August</option>
+                <option value="Sept">September</option>
+                <option value="Oct">October</option>
+                <option value="Nov">November</option>
+                <option value="Dec">December</option>
+                <input type="text" name="year" placeholder="Year">
+                <input type="url" name="url" placeholder="Certificate URL">
+
+                <!-- <input type="text" name="name" placeholder="Skill Name" > -->
 
 
 
-            <textarea placeholder="Coption goes here" name="content"></textarea>
-            <input type="file" name="img">
-            <span style="margin-left: 25px;font-size: 14px;">Image is optional.</span>
 
-
-
-
+            </select>
 
             <input type="submit" name="submit" value="Save"
                 style="background-color: tomato;border: none;padding: 0px 12px;height: 35px;border-radius: 2px;">
@@ -250,25 +262,6 @@ width: 300px;
 
 </div>
 <script type="text/javascript">
-
-
-    //using ajax 
-
-    // $(".delete").click(function(e) {
-
-    //     var id = this.id;
-    //     var href = this.href;
-
-    //     console.log(href,id);
-    //     e.preventDefault();
-
-    //     $.ajax({
-    //             url:href,
-    //             data:{},
-    //     });
-
-    //     $("#"+id).fadeOut(1000);
-    // });
 
     var modal = document.querySelector(".modal");
     var trigger = document.querySelector(".trigger");
