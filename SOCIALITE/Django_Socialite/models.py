@@ -9,6 +9,8 @@ class Profile(models.Model):
     git = models.CharField(max_length=100)
     hacker = models.CharField(max_length=100)
     bio = models.TextField(max_length=200)
+    college_name = models.CharField(max_length=100, null=True)
+    college_year = models.CharField(max_length=100, null=True)
     username = models.OneToOneField(User, on_delete=models.CASCADE)
 
 

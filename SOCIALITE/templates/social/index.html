@@ -1,26 +1,83 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
     <title>Home</title>
 </head>
+
 <body>
     <nav>
-        
+        <div class="left">
+            <h2>devhub</h2>
+        </div>
+        <div class="right"></div>
     </nav>
     <div class="header">
         <div class="landing">
             <div class="content">
-                <h2>Welcome To DevHub</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto dolorem exercitationem ullam ratione eligendi quos velit, nam illo iure perferendis dolor modi similique, nostrum repudiandae sunt tempora quaerat assumenda quis.</p>
-            </div>
-            <div class="image">
+                <h1>Welcome To Our Community</h1>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat iste deserunt consequatur qui
+                    numquam nemo accusantium nisi aut. Rem a non optio eos quidem dignissimos illum, exercitationem
+                    ratione quos esse?</p>
+                <div class="links">
+                    <a href="{% url 'signup' %}">For Students</a>
+                    <a href="{% url 'orgsignup' %}">For Company</a>
+                </div>
 
+
+            </div>
+            <div class="content image">
+                <img src="{% static 'images/header.png' %}" alt="">
             </div>
         </div>
     </div>
+
+    <div class="section_about">
+        <div class="container">
+            <div class="wrap hide">
+                <img src="{% static 'images/about-us.png' %}" alt="">
+            </div>
+            <div class="wrap">
+                <h1>Who We Are ?</h1>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident nisi molestias inventore corrupti!
+                    Fugit nihil quisquam architecto nesciunt consequatur culpa pariatur quasi numquam blanditiis,
+                    exercitationem sint facilis harum corporis a.<br>
+                </p>
+                <a href="" class="explore">Explore More &rarr;</a>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="section_step">
+        <div class="wrap">
+            <span>01</span>
+            <h2>Stengthen Your Skills</h2></div>
+        <div class="wrap">
+            <span>02</span>
+            <h2>Make a Good Profile</h2></div>
+        <div class="wrap">
+            <span>03</span>
+            <h2>Get Hired with us</h2></div>
+
+    </div>
+    <footer>
+        
+        <h2>Join us on  &nbsp;&nbsp;&nbsp; <a href=""><i class="fab fa-linkedin"></i></a>&nbsp;
+            <a href="" ><i class="fab fa-facebook"></i></a>&nbsp;
+            <a href="" ><i class="fab fa-twitter"></i></a>&nbsp;
+            <a href="" ><i class="fab fa-instagram"></i></a></h2>
+
+      
+      
+    </footer>
 </body>
+
 </html>

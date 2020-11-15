@@ -26,7 +26,7 @@ def signup(request):
                 print(user_obj)
                 user_obj.save()
                 new_prof = Profile(username=user_obj, fb="",
-                                   lkd="", git="", hacker="", bio="")
+                                   lkd="", git="", hacker="", bio="", college_name="", college_year="")
                 new_prof.save()
                 print(new_prof)
                 new_resume = Resume(resume="", portfolio="", username=user_obj)
@@ -189,6 +189,8 @@ def update_profile(request):
         p.hacker = request.POST['hacker']
         p.git = request.POST['git']
         p.bio = request.POST['bio']
+        p.college_name = request.POST['cname']
+        p.college_year = request.POST['cyear']
         p.save()
 
         print(request.POST['linkedin'], request.POST['fb'],
@@ -742,49 +744,50 @@ def follow(request, id):
 
 
 def myresume(request):
-    try:
-        obj = User.objects.get(username=request.session['username'])
-        print(obj)
+
+    obj = User.objects.get(username=request.session['username'])
+    user = User.objects.get(username=obj)
+    kk = Resume.objects.get(username = user)
+    print(obj)
+    if request.method == 'POST':
         user = User.objects.get(username=obj)
-        if request.method == 'POST':
-            url1 = request.POST['resume']
-            url2 = request.POST['portfolio']
-            print(url1 , url2)
+        kk = Resume.objects.get(username = user)
+        url1 = request.POST['resume']
+        url2 = request.POST['portfolio']
+        print(url1 , url2)
 
-            kk = Resume.objects.get(username = user)
-            kk.resume = url1
-            kk.portfolio = url2
-            kk.save()
-            try:
-                p = Profile.objects.get(username=user)
-                print(p)
-            except:
-                pass
-            f = user.first_name
-            l = user.last_name
+        kk = Resume.objects.get(username = user)
+        kk.resume = url1
+        kk.portfolio = url2
+        kk.save()
+        print(kk)
+        try:
+            p = Profile.objects.get(username=user)
+            print(p)
+        except:
+            pass
+        f = user.first_name
+        l = user.last_name
 
-            context = {
-                'icon': str(f[0].upper()+l[0].upper()),
-                'name': str(f+' '+l)
-            }
-            return render(request, 'resume.html',{'d': context})
-        else:
+        context = {
+            'icon': str(f[0].upper()+l[0].upper()),
+            'name': str(f+' '+l)
+        }
+        return render(request, 'social/resume.html',{'d': context,'kk':kk})
+    else:
 
-            try:
-                p = Profile.objects.get(username=user)
-                print(p)
-            except:
-                pass
-            f = user.first_name
-            l = user.last_name
+        try:
+            p = Profile.objects.get(username=user)
+            print(p)
+        except:
+            pass
+        f = user.first_name
+        l = user.last_name
 
-            context = {
-                'icon': str(f[0].upper()+l[0].upper()),
-                'name': str(f+' '+l)
-            }
-            return render(request, 'social/resume.html',{'d': context})
-    except:
-        return HttpResponse('Error 404')
-
+        context = {
+            'icon': str(f[0].upper()+l[0].upper()),
+            'name': str(f+' '+l)
+        }
+        return render(request, 'social/resume.html',{'d': context,'p':p,'kk':kk})
 
 

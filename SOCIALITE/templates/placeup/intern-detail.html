@@ -1,0 +1,135 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}" /> -->
+    <link rel="stylesheet" href="{% static 'job-detail.css' %}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <title>PlaceUp | Work Details</title>
+</head>
+
+<body>
+    <nav>
+        <div class="left">
+            <h2>PlaceUp</h2>
+        </div>
+        <div class="right"></div>
+    </nav>
+
+
+    <div class="section_job">
+        <div class="info">
+            <div class="left">
+                <h1>Web Development</h1>
+                <h3>Binary Numbers</h3>
+            </div>
+            <div>
+                <img src="{% static '../media/images/company_logo/c3.png' %}" alt="" />
+            </div>
+        </div>
+
+        <div class="info_one">
+            <p>
+                <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Delhi, India
+            </p>
+            <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;1000/ month</p>
+            <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 2 Months</p>
+        </div>
+        <button class="btn">Internship</button>
+        <div class="info_two">
+            <p  class="light"> <i class="far fa-user-circle"></i> &nbsp;&nbsp;12 applicants</p>
+        </div>
+        <hr class="line">
+
+        <!-- Company INfo -->
+        <div class="info_three">
+            <h4>About {Company Name}</h4>
+            <a href="">Website</a>
+            <p class="light">Tutoraj is a team of people with the aim of making their clients' lives better. We aspire to bring positivity and enlighten people with knowledge and skills that will take them a long way to be successful in their lives and careers. Our diverse exposure across the industry and our well-qualified set of tutors ensure that we cater to a vast set of audiences, ranging from technology to modeling, spirituality, and/or life skills.</p>
+        </div>
+
+        <!-- Work Info -->
+        <div class="info_three">
+            <h4>About Internship</h4>
+            <!-- <a href="">Website</a> -->
+            <p class="light">Selected intern's day-to-day responsibilities include:</p>
+            <!-- ckeditor content dyanamic content -->
+            <ul class="light">
+                <li>Market about our product using proper ad appeals</li>
+                <li>Follow and track up to our consumer behavior template</li>
+                <li> Provide Marketing ad strategies</li>
+                <li>Attend Skype meetings</li>
+                <li>Do minimum sales for the organization</li>
+
+            </ul>
+        </div>
+
+        <!-- Work Info -->
+        <div class="info_three">
+            <h4>Who can apply</h4>
+            <!-- <a href="">Website</a> -->
+            <p class="light">Only those candidates can apply who:</p>
+            <!-- ckeditor content dyanamic content -->
+            <ul class="light">
+                <li>are available for the work from home job/internship</li>
+                <li>can start the work from home job/internship between 15th Nov'20 and 20th Dec'20</li>
+                <li>are available for duration of 1 week</li>
+                <li>have relevant skills and interests</li>
+
+
+            </ul>
+        </div>
+
+        <!-- Tech Stack needed -->
+        <div class="info_three">
+            <h4>Tech Stack Needed</h4>
+            <!-- <a href="">Website</a> -->
+            <p class="light">HTML, CSS, JavaScript and Python along with AWS</p>
+            <!-- ckeditor content dyanamic content -->
+           
+        </div>
+
+        <!-- Salary -->
+        <div class="info_three">
+            <h4>Perks</h4>
+            <!-- <a href="">Website</a> -->
+            <p class="light">Certificate and Letter of recommendation</p>
+            <!-- ckeditor content dyanamic content -->
+
+        </div>
+
+        <!-- Vacancy -->
+        <div class="info_three">
+            <h4>Number of Openings</h4>
+            <!-- <a href="">Website</a> -->
+            <p class="light">10</p>
+            <!-- ckeditor content dyanamic content -->
+
+        </div>
+        <div style="text-align: center;">
+        <a href="" ><button class="apply">Apply Now</button></a>
+    </div>
+
+    <div class="alert_card">
+        <!-- <p>Applied Successfully</p> -->
+        <p>Already applied</p>
+
+        <button class="btn_alert" onclick="fire()">&#x274C;</button>
+    </div>
+    </div>
+<script>
+    const alert = document.querySelector('.alert_card');
+    const btn_alert = document.querySelector('.btn_alert');
+
+    const fire = () =>{
+       alert.style.display = 'none';
+    }
+</script>
+</body>
+
+</html>

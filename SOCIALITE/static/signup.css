@@ -1,3 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 .container{
 	text-align: center;
 	background-color: #fff;
@@ -9,6 +17,7 @@
 	border-radius: 4px;
 	box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
 }
+
 form{
 	text-align: center;
 	display: inline-block;

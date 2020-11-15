@@ -82,3 +82,9 @@ def orgprofile(request):
 
 def jobs(request):
     return render(request, 'placeup/jobs-intern-plateform.html')
+
+def job_detail(request):
+    return render(request, 'placeup/job-detail.html')
+
+def intern_detail(request):
+    return render(request, 'placeup/intern-detail.html')

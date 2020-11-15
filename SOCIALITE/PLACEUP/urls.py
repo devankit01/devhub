@@ -12,6 +12,10 @@ urlpatterns = [
 
     path('company-profile/', orgprofile, name='orgprofile'),
     path('works/', jobs, name='jobs'),
+    path('job-details/', job_detail, name='job_detail'),
+    path('intern-details/', intern_detail, name='intern_detail'),
+
+
 
 
 
