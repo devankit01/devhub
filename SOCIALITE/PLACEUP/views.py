@@ -2,6 +2,8 @@ from .models import *
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import auth
 from django.contrib.auth.models import User
+from SOCIALITE.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 # Create your views here.
 
 
@@ -28,6 +30,11 @@ def orgsignup(request):
                 new_prof = CompanyProfile(username=user_obj, company_type = request.POST['type'], company_specialization = request.POST['typeone'], phone = "", company_logo = "", about_company = "", company_site = "")
                 new_prof.save()
                 print(new_prof)
+                subject = 'Account Activation'
+                message = "HI "
+                recepient = [email]
+                send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
+                print('Email ok')
                 return redirect('orgsignin')
 
         else:
@@ -77,14 +84,156 @@ def orglogout(request):
 
 
 def orgprofile(request):
-    return render(request, 'placeup/profile.html')
+    obj = User.objects.get(username=request.session['username'])
+    user = User.objects.get(username=obj)
+    company_profile = CompanyProfile.objects.get(username = user)
+    print(company_profile)
+    return render(request, 'placeup/profile.html',{'profile':company_profile})
 
 
 def jobs(request):
-    return render(request, 'placeup/jobs-intern-plateform.html')
+    try:
+        if request.session['username']:
+            data = Work.objects.filter(status = True)
+            print(data)
+            data = data[::-1]
+            return render(request, 'placeup/jobs-intern-plateform.html',{'data':data})
+    except:
+        return HttpResponse('Error 404')
 
-def job_detail(request):
-    return render(request, 'placeup/job-detail.html')
+def job_detail(request,id):
+    try:
+        if request.session['username']:
+            data = Work.objects.get(id=id)
+            print(data)
+            if data.Type == 'Job':
+                print('Job')
+                return render(request, 'placeup/job-detail.html',{'data':data})
+
+            elif data.Type == 'Internship':
+                print('Internship')
+                return render(request, 'placeup/intern-detail.html',{'data':data})
+
+            else:
+                return HttpResponse('Error 404')
+    except:
+        return HttpResponse('Error 404')
 
 def intern_detail(request):
     return render(request, 'placeup/intern-detail.html')
+
+def update_orgprofile(request):
+    obj = User.objects.get(username=request.session['username'])
+    print(obj)
+    user = User.objects.get(username=obj)
+
+    cprofile = CompanyProfile.objects.get(username = user)
+    specialization = request.POST['csp']
+    phone = request.POST['phone']
+    site = request.POST['csite']
+    logo = request.FILES.get('clogo')
+    about = request.POST['about']
+    print(cprofile,specialization,phone,site,logo,about)    
+    cprofile.company_specialization = specialization
+    cprofile.phone = phone
+    if logo:
+        cprofile.company_logo = logo
+    cprofile.company_site = site
+    cprofile.about_company = about
+    cprofile.save()
+    print(cprofile)
+    return redirect('orgprofile')
+    
+
+def orgjob(request):
+    return render(request,'placeup/org_job_intern.html')
+
+def JobHire(request):
+    try:
+        if request.session['username']:
+            user = User.objects.get(username = request.session['username'])
+            company = CompanyProfile.objects.get(username = user)
+            works = Work.objects.filter(company = company)
+            print(works)
+        return render(request,'placeup/org_job_.html',{'works':works})
+    except:
+        return HttpResponse('Error 404')
+
+def job_add(request):
+    if request.method=="POST":
+        Type=request.POST.get('type')
+        print(Type)
+        about=request.POST.get('about')
+        print(about)
+        salary=request.POST.get('salary')
+        print(salary)
+        location=request.POST.get('location')
+        print(location)
+        employee=request.POST.get('Employement_type')
+        print(employee)
+        experience=request.POST.get('Experience')
+        print(experience)
+        tech_need=request.POST.get('tech_need')
+        print(tech_need)
+        status=request.POST.get('status')
+        print(status)
+        minimum_req=request.POST.get('minimum_requirement')
+        print(minimum_req)
+        vacancy=request.POST.get('vacancy')
+        print(vacancy)
+        
+        if status=="on":
+            status=True
+        else:
+            status=False
+        id=User.objects.get(username=request.user)
+    
+        cmpny=CompanyProfile.objects.get(username=id)
+    
+        job=Work(work_name=request.POST['wpn'],company=cmpny,salary_or_stipend=salary,Type=Type,about=about,location=location,emp_type=employee,experience_or_time=experience,tech_stack=tech_need,status=status,min_requirement=minimum_req,number_of_vacancy=vacancy)
+        job.save()
+        return redirect('job_add')
+    else:
+        return render(request,'placeup/Add_job_form.html')
+
+# def add_form_job(request):
+
+def apply_job(request,id):
+    print(request.session['username'],id)
+    user = User.objects.get(username = request.session['username'])
+    profile = Profile.objects.get(username = user)
+    work = Work.objects.get(id=id)
+    print(profile, work)
+    d = work.applicants.add(profile)
+    print(d)
+    return redirect('myapplications')
+
+def myapplications(request):
+    user = User.objects.get(username = request.session['username'])
+    profile = Profile.objects.get(username = user)
+    myapplications = Work.objects.filter(applicants = profile)
+    resume_selected = Work.objects.filter(resume_selected = profile)
+    # applied = Work.objects.filter(applicants = user)
+    print(myapplications,resume_selected)
+    myapplications = myapplications[::-1]
+    resume_selected = resume_selected[::-1]
+    return render(request, 'placeup/my-applications.html',{'data':myapplications, 'data1':resume_selected})
+
+
+def work_view(request,id):
+    work = Work.objects.filter(id=id)
+    for i in work:
+        print(i.applicants.all())
+        applicants = i.applicants.all()
+    return render(request,'placeup/job-view.html',{'applicants':applicants,'id':id})
+
+
+def select_resume(request,id1,work):
+    print(id1,work)
+    work = Work.objects.get(id=work)
+
+    user =  User.objects.get(id=id1)
+    profile = Profile.objects.get(username = user)
+    d = work.resume_selected.add(profile)
+
+    return redirect('work_view',id=work.id)

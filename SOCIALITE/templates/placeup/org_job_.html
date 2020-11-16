@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}" /> -->
+    <link rel="stylesheet" href="{% static 'job-admin.css' %}" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+    <title>PlaceUp | Job Admin</title>
+  </head>
+  <style></style>
+
+  <body>
+    <nav>
+      <div class="left">
+        <h2>PlaceUp</h2>
+      </div>
+      <div class="right">
+        <a href="{% url 'orgprofile' %}" class="app"><i class="fas fa-home"></i></a>
+        <a href="{% url 'orglogout' %}"> <i class="fas fa-lock"></i></a></div>
+    </nav>
+    <div class="container">
+      <div class="job">
+        <a href="{% url 'job_add' %}" class="job_link">
+        Create a Job
+        </a>
+      </div>
+<div class="section_table">
+      <!-- <h2 style="margin-bottom: 15px;">Job List</h2> -->
+      <table>
+        <tr>
+          <th>Job Profile</th>
+          <th>Posted on</th>
+          <th>Salary/Perks</th>
+          <th>Location</th>
+          <th>View Details</th>
+
+
+        </tr>
+        {% for val in works %}
+        <tr>
+          <td>{{val.work_name}}</td>
+          <td>{{val.posted}}</td>
+          <td>{{val.salary_or_stipend}}</td>
+
+    <td>{{val.location}}</td>
+          <td><a href="{% url 'work_view' id=val.id %}">Click  <i class="fas fa-external-link-alt"></i></a> </td>
+
+        </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+    </div>
+  </body>
+</html>

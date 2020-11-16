@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+nav {
+    /* margin: 0 20px; */
+    padding: 18px 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: auto;
+    display: inline-flex;
+    justify-content: space-between;
+  }
+
+  nav .right a{
+      font-weight: 550;
+      font-size: 18px;
+      text-decoration: none;
+      margin-right: 20px;
+  }
+  .section_profile{
+      width: 60%;
+      height: auto;
+      margin: 40px auto;
+  }
+  .profile{
+      display: flex;
+  }
+  .profile .left img{
+      border-radius: 50%!important;
+  }
+  .profile .left, .profile .right{
+     margin: 40px 30px;
+  }
+  .edit_btn{
+      float: right;
+        border: none;
+  }
+  .trigger{
+      border: none;
+      background: none;
+      outline: none;
+  }
+  .curl{
+      text-decoration: none;
+      color: royalblue;
+  }
+  .ctype{
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.7);
+  }
+.line{
+    margin-top: -30px;
+    background: rgb(255, 255, 255);
+    opacity: 0.3;
+}
+.section_job{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+
+}
+.section_job div{
+    padding: 10px 15px;
+    text-align: center;
+    background: linear-gradient(120deg,rgb(0, 233, 194),rgb(0, 173, 136));
+    font-size: 18px;
+    font-weight: 550;
+    margin: 10px 0px;
+    width: 40%;
+}
+.section_job a{
+    color: white;
+    text-decoration: none;
+
+}
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+    width: 24rem;
+    border-radius: 2px;
+}
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: ;
+}
+.close-button:hover {
+    background-color: darkgray;
+}
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+input,textarea,select{
+	margin: 10px 14px;
+	padding: 4px 6px;
+	width: 300px;
+
+	/*margin-left: 30px;*/
+}
+select{
+	width:300px;
+}
+  @media only screen and (max-width: 600px) {
+    .section_profile{
+        width: 90%;
+        height: auto;
+        margin: 40px auto;
+    }
+    .profile{
+        flex-direction: column;
+        margin-top: 30px;
+    }
+    .profile .left, .profile .right{
+        margin: 10px;
+     }
+     .section_job{
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    
+    }
+    .line{
+        margin-top: -15px;
+    }
+    .section_job div{
+        width: 100%;
+    }
+
+  }

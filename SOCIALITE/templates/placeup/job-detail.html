@@ -2,134 +2,152 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- <link rel="stylesheet" href="{% static 'style.css' %}" /> -->
     <link rel="stylesheet" href="{% static 'job-detail.css' %}" />
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style>
+      nav {
+        /* margin: 0 20px; */
+        padding: 18px 20px;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: auto;
+        display: inline-flex;
+        justify-content: space-between;
+      }
 
+      nav .right a {
+        font-weight: 550;
+        font-size: 18px;
+        text-decoration: none;
+        margin-right: 20px;
+        /* margin-top: 90px; */
+      }
+    </style>
     <title>PlaceUp | Work Details</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav>
-        <div class="left">
-            <h2>PlaceUp</h2>
-        </div>
-        <div class="right"></div>
+      <div class="left">
+        <h2>PlaceUp</h2>
+      </div>
+      <div class="right" style="margin-top: 5px">
+        <a href="{% url 'jobs' %}"><i class="fas fa-arrow-left"></i></a>
+
+        <!-- <a href="{% url 'orglogout' %}">Logout <i class="fas fa-lock"></i></a> -->
+      </div>
     </nav>
 
-
     <div class="section_job">
-        <div class="info">
-            <div class="left">
-                <h1>Web Development</h1>
-                <h3>Binary Numbers</h3>
-            </div>
-            <div>
-                <img src="{% static '../media/images/company_logo/c3.png' %}" alt="" />
-            </div>
+      <div class="info">
+        <div class="left">
+          <h1>{{data.work_name}}</h1>
+          <h3>{{data.company.username.first_name}}</h3>
         </div>
-
-        <div class="info_one">
-            <p>
-                <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Delhi, India
-            </p>
-            <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;3-4 LPA</p>
-            <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 0-1 years</p>
+        <div>
+          <img
+            src="{% static '../media/images/' %}{{data.company.company_logo}}"
+            alt=""
+          />
         </div>
-        <button class="btn">Job Opportunity</button>
-        <div class="info_two">
-            <p  class="light"> <i class="far fa-user-circle"></i> &nbsp;&nbsp;12 applicants</p>
-        </div>
-        <hr class="line">
+      </div>
 
-        <!-- Company INfo -->
-        <div class="info_three">
-            <h4>About {Company Name}</h4>
-            <a href="">Website</a>
-            <p class="light">Tutoraj is a team of people with the aim of making their clients' lives better. We aspire to bring positivity and enlighten people with knowledge and skills that will take them a long way to be successful in their lives and careers. Our diverse exposure across the industry and our well-qualified set of tutors ensure that we cater to a vast set of audiences, ranging from technology to modeling, spirituality, and/or life skills.</p>
-        </div>
+      <div class="info_one">
+        <p>
+          <i class="fas fa-map-marker-alt"></i
+          >&nbsp;&nbsp;&nbsp;&nbsp;{{data.location}}
+        </p>
+        <p>
+          <i class="fas fa-money-bill"></i
+          >&nbsp;&nbsp;{{data.salary_or_stipend}}
+        </p>
+        <p>
+          <i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp;
+          {{data.experience_or_time }}
+        </p>
+      </div>
+      <button class="btn">Job Opportunity</button>
+      <div class="info_two">
+        <p class="light">
+          <i class="far fa-user-circle"></i>
+          &nbsp;&nbsp;{{data.applicants.count}} applicants
+        </p>
+      </div>
+      <hr class="line" />
 
-        <!-- Work Info -->
-        <div class="info_three">
-            <h4>Responsibilties</h4>
-            <!-- <a href="">Website</a> -->
-            <p class="light">Selected candidates day-to-day responsibilities include:</p>
-            <!-- ckeditor content dyanamic content -->
-            <ul class="light">
-                <li>Market about our product using proper ad appeals</li>
-                <li>Follow and track up to our consumer behavior template</li>
-                <li> Provide Marketing ad strategies</li>
-                <li>Attend Skype meetings</li>
-                <li>Do minimum sales for the organization</li>
+      <!-- Company INfo -->
+      <div class="info_three">
+        <h4>About {{data.company.username.first_name}}</h4>
+        <a href="//{{data.company.company_site}}">Website</a>
+        <p class="light">{{data.company.about_company}}</p>
+      </div>
 
-            </ul>
-        </div>
+      <!-- Work Info -->
+      <div class="info_three">
+        <h4>Responsibilties</h4>
+        <!-- <a href="">Website</a> -->
+        <p class="light">
+          Selected candidates day-to-day responsibilities include:
+        </p>
+        <!-- ckeditor content dyanamic content -->
+        <ul class="light">
+          {{data.about | safe}}
+        </ul>
+      </div>
 
-        <!-- Work Info -->
-        <div class="info_three">
-            <h4>Who can apply</h4>
-            <!-- <a href="">Website</a> -->
-            <p class="light">Only those candidates can apply who:</p>
-            <!-- ckeditor content dyanamic content -->
-            <ul class="light">
-                <li>are available for the work from home job/internship</li>
-                <li>can start the work from home job/internship between 15th Nov'20 and 20th Dec'20</li>
-                <li>are available for duration of 1 week</li>
-                <li>have relevant skills and interests</li>
+      <!-- Work Info -->
+      <div class="info_three">
+        <h4>Who can apply</h4>
+        <!-- <a href="">Website</a> -->
+        <p class="light">Only those candidates can apply who:</p>
+        <!-- ckeditor content dyanamic content -->
+        <ul class="light">
+          {{data.min_requirement | safe}}
+        </ul>
+      </div>
 
+      <!-- Tech Stack needed -->
+      <div class="info_three">
+        <h4>Tech Stack Needed</h4>
+        <!-- <a href="">Website</a> -->
+        <p class="light">{{data.tech_stack}}</p>
+        <!-- ckeditor content dyanamic content -->
+      </div>
 
-            </ul>
-        </div>
+      <!-- Salary -->
+      <div class="info_three">
+        <h4>Perks</h4>
+        <!-- <a href="">Website</a> -->
+        <p class="light">{{data.salary_or_stipend}}</p>
+        <!-- ckeditor content dyanamic content -->
+      </div>
 
-        <!-- Tech Stack needed -->
-        <div class="info_three">
-            <h4>Tech Stack Needed</h4>
-            <!-- <a href="">Website</a> -->
-            <p class="light">HTML, CSS, JavaScript and Python along with AWS</p>
-            <!-- ckeditor content dyanamic content -->
-           
-        </div>
+      <!-- Vacancy -->
+      <div class="info_three">
+        <h4>Number of Openings</h4>
+        <!-- <a href="">Website</a> -->
+        <p class="light">{{data.number_of_vacancy}}</p>
+        <!-- ckeditor content dyanamic content -->
+      </div>
+      <div style="text-align: center">
+        <form action="{% url 'apply_job' id=data.id %}" method="POST">
+          {% csrf_token %}
+          <button class="apply">Apply Now</button>
+        </form>
+      </div>
 
-        <!-- Salary -->
-        <div class="info_three">
-            <h4>Perks</h4>
-            <!-- <a href="">Website</a> -->
-            <p class="light">3-4 LPA</p>
-            <!-- ckeditor content dyanamic content -->
-
-        </div>
-
-        <!-- Vacancy -->
-        <div class="info_three">
-            <h4>Number of Openings</h4>
-            <!-- <a href="">Website</a> -->
-            <p class="light">10</p>
-            <!-- ckeditor content dyanamic content -->
-
-        </div>
-        <div style="text-align: center;">
-        <a href="" ><button class="apply">Apply Now</button></a>
     </div>
+    <script>
+      const alert = document.querySelector(".alert_card");
+      const btn_alert = document.querySelector(".btn_alert");
 
-    <div class="alert_card">
-        <!-- <p>Applied Successfully</p> -->
-        <p>Already applied</p>
-
-        <button class="btn_alert" onclick="fire()">&#x274C;</button>
-    </div>
-    </div>
-<script>
-    const alert = document.querySelector('.alert_card');
-    const btn_alert = document.querySelector('.btn_alert');
-
-    const fire = () =>{
-       alert.style.display = 'none';
-    }
-</script>
-</body>
-
+      const fire = () => {
+        alert.style.display = "none";
+      };
+    </script>
+  </body>
 </html>

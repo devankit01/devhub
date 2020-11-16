@@ -16,146 +16,49 @@
       <div class="left">
         <h2>PlaceUp</h2> 
       </div>
-      <div class="right" style="float: right;margin-top: -28px;">
-        <a href="" class="app">My Applications&nbsp;<i class="fas fa-location-arrow"></i></a>
-        
+      <div class="right" style="margin-top: 5px;">
+        <a href="{% url 'dashboard' %}" class="app"><i class="fas fa-home"></i></a>
+
+        <a href="{% url 'myapplications' %}" class="app"><i class="fas fa-location-arrow"></i></a>
+        <a href="{% url 'logout' %}" class="app"><i class="fas fa-lock"></i></a>
       </div>
     </nav>
     <!-- Internships Goes here -->
 
-    <h2 class="cardContainer" style="margin: 25px">Recent Internships</h2>
+    <h2 class="cardContainer" style="margin: 25px">Recent Works</h2>
     <div class="cardContainer">
+      {% for val in data %}
       <div class="card">
+        <span >#{{val.Type}}</span>
         <div class="info">
           <div>
-            <h2>Junior Full Stack Developer</h2>
-            <p class="cname">Binary Numbers</p>
+            <h2>{{val.work_name}}</h2>
+            <p class="cname">{{val.company.username.first_name}}</p>
           </div>
           <div>
             <img
-              src="{% static '../media/images/company_logo/c1.png' %}"
+            src="{% static '../media/images/' %}{{val.company.company_logo}}"
               alt=""
             />
           </div>
         </div>
         <div class="info_more">
           <p>
-            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Work
-            From Home
+            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{val.location}}
           </p>
-          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;1000 /month</p>
-          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 2 months</p>
+          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;{{val.salary_or_stipend}}</p>
+          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; {{val.experience_or_time}}</p>
         </div>
         <div class="apply">
-          <a href="">View Details &rarr;</a>
+          <a href="{% url 'job_detail' id=val.id %}">View Details &rarr;</a>
         </div>
       </div>
+      {% endfor %}
 
-      <div class="card">
-        <div class="info">
-          <div>
-            <h2>Junior Full Stack Developer</h2>
-            <p class="cname">Binary Numbers</p>
-          </div>
-          <div>
-            <img
-              src="{% static '../media/images/company_logo/c1.png' %}"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="info_more">
-          <p>
-            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Work
-            From Home
-          </p>
-          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;1000 /month</p>
-          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 2 months</p>
-        </div>
-        <div class="apply">
-          <a href="">View Details &rarr;</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="info">
-          <div>
-            <h2>Junior Full Stack Developer</h2>
-            <p class="cname">Binary Numbers</p>
-          </div>
-          <div>
-            <img
-              src="{% static '../media/images/company_logo/c1.png' %}"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="info_more">
-          <p>
-            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Work
-            From Home
-          </p>
-          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;1000 /month</p>
-          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 2 months</p>
-        </div>
-        <div class="apply">
-          <a href="">View Details &rarr;</a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="info">
-          <div>
-            <h2>Junior Full Stack Developer</h2>
-            <p class="cname">Binary Numbers</p>
-          </div>
-          <div>
-            <img
-              src="{% static '../media/images/company_logo/c1.png' %}"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="info_more">
-          <p>
-            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Work
-            From Home
-          </p>
-          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;1000 /month</p>
-          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 2 months</p>
-        </div>
-        <div class="apply">
-          <a href="">View Details &rarr;</a>
-        </div>
-      </div>
+
     </div>
 
 
-    <!-- Jobs Goes here -->
-    <h2 class="cardContainer" style="margin: 25px">Recent Jobs</h2>
-    <div class="cardContainer">
-      <div class="card">
-        <div class="info">
-          <div>
-            <h2>Junior Full Stack Developer</h2>
-            <p class="cname">Binary Numbers</p>
-          </div>
-          <div>
-            <img
-              src="{% static '../media/images/company_logo/c1.png' %}"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="info_more">
-          <p>
-            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;&nbsp;&nbsp;Delhi, India
-          </p>
-          <p><i class="fas fa-money-bill"></i>&nbsp;&nbsp;3-4 LPA</p>
-          <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp; 0-1 years</p>
-        </div>
-        <div class="apply">
-          <a href="">View Details &rarr;</a>
-        </div>
-      </div>
-    </div>
+
   </body>
 </html>

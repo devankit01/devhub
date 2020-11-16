@@ -26,7 +26,7 @@ def signup(request):
                 print(user_obj)
                 user_obj.save()
                 new_prof = Profile(username=user_obj, fb="",
-                                   lkd="", git="", hacker="", bio="", college_name="", college_year="")
+                                   lkd="", git="", hacker="", bio="", college_name="", college_year="", resume="", portfolio = "")
                 new_prof.save()
                 print(new_prof)
                 new_resume = Resume(resume="", portfolio="", username=user_obj)
@@ -51,7 +51,8 @@ def signin(request):
             print(uname)
             pwd = request.POST['pass1']
             print(uname, pwd)
-            User.objects.get(username=uname)
+            kk = User.objects.get(username=uname)
+            Profile.objects.get(username = kk)
             user_authenticate = auth.authenticate(username=uname, password=pwd)
             if user_authenticate is not None:
                 auth.login(request, user_authenticate)
@@ -179,25 +180,25 @@ def profile(request):
 
 
 def update_profile(request):
-    try:
-        obj = User.objects.get(username=request.session['username'])
-        print(obj)
-        user = User.objects.get(username=obj)
-        p = Profile.objects.get(username=user)
-        p.lkd = request.POST['linkedin']
-        p.fb = request.POST['fb']
-        p.hacker = request.POST['hacker']
-        p.git = request.POST['git']
-        p.bio = request.POST['bio']
-        p.college_name = request.POST['cname']
-        p.college_year = request.POST['cyear']
-        p.save()
 
-        print(request.POST['linkedin'], request.POST['fb'],
-              request.POST['hacker'], request.POST['git'], request.POST['bio'])
-        return redirect('/user/profile')
-    except:
-        return HttpResponse('Error 404')
+    obj = User.objects.get(username=request.session['username'])
+    print(obj)
+    user = User.objects.get(username=obj)
+    p = Profile.objects.get(username=user)
+    p.lkd = request.POST['linkedin']
+    p.hacker = request.POST['hacker']
+    p.git = request.POST['git']
+    p.bio = request.POST['bio']
+    p.college_name = request.POST['cname']
+    p.college_year = request.POST['cyear']
+    p.resume = request.POST['resume']
+    p.portfolio = request.POST['portfolio']
+    p.save()
+
+    print(request.POST['linkedin'],
+           request.POST['hacker'], request.POST['git'], request.POST['bio'])
+    return redirect('/user/profile')
+
 
 
 def skills(request):

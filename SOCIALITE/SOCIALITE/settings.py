@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Django_Socialite',
     'PLACEUP',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,13 @@ STATICFILES_DIRS = [
 ]
 MEDIA_URL = '/media/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media/images')
+
+
+
+# Email
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreplydeveloperhub@gmail.com'
+EMAIL_HOST_PASSWORD = 'devhub@987654321'

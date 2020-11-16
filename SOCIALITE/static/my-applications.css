@@ -1,0 +1,14 @@
+.btn1,.btn2,.btn3{
+    padding: 4px 8px;
+    background: rgb(0, 163, 163);
+    border: none;
+    color: white;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+    border-radius:2px;
+    margin: 20px 10px;
+}
+.kalam{
+    width: 90%;
+    height: auto;
+    margin: 0 auto;
+}

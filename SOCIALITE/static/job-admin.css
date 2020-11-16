@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+.section_table{
+    padding: 25px 0px;
+}
+
+nav {
+    /* margin: 0 20px; */
+    padding: 18px 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: auto;
+    display: inline-flex;
+    justify-content: space-between;
+  }
+
+  nav .right a{
+      font-weight: 550;
+      font-size: 18px;
+      text-decoration: none;
+      margin-right: 20px;
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  .section_table{
+      margin-top: -35px;
+  }
+  .container{
+      width: 90%;
+      height: auto;
+      margin: 0 auto;
+      /* padding: 10px 0px; */
+  }
+  .container .job{
+      margin: 50px 0px;
+  }
+  .job_link{
+      padding: 8px 20px;
+    background: linear-gradient(120deg,rgb(0, 173, 136),rgb(0, 233, 194));
+      text-decoration: none;
+      font-weight: 550;
+      font-size: 18px;
+      color: white;
+  }
+  table a{
+      text-decoration: none;
+  }

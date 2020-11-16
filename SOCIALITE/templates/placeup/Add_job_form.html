@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'add-job.css' %}" />
+
+    <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <title>PlaceUp | Create a Job</title>
+  </head>
+  <style></style>
+
+  <body>
+    <nav>
+      <div class="left">
+        <h2>PlaceUp</h2>
+      </div>
+      <div class="right">
+        <a href="{% url 'JobHire' %}"><i class="fas fa-arrow-left"></i></a>
+
+        <a href="{% url 'orgprofile' %}" class="app"><i class="fas fa-home"></i></a>
+
+        <a href="{% url 'orglogout' %}"> <i class="fas fa-lock"></i></a>
+      </div>
+    </nav>
+    <div class="main">
+      <form method="post">
+        {% csrf_token %}
+        <h2 style="margin: 20px 0px">Job/Internship Form</h2>
+
+        <label for="exampleFormControlTextarea1">Type</label
+        ><select name="type">
+          <option value="Job">Job</option>
+          <option value="Internship">Internship</option>
+        </select>
+        <label for="exampleFormControlTextarea1"
+          >Job/Internship Profile Name</label
+        >
+        <input type="text" name="wpn" placeholder="e.g. Python Developer" />
+
+        <label for="exampleFormControlTextarea1">About The job</label>
+        <textarea
+          id="exampleFormControlTextarea1"
+          rows="3"
+          name="about"
+        ></textarea>
+        <script type="text/javascript">
+          CKEDITOR.replace("exampleFormControlTextarea1");
+        </script>
+
+        <label for="exampleFormControlTextarea1"
+          >Salary or Stipend / Unpaid</label
+        >
+        <input
+          type="text"
+          name="salary"
+          placeholder="e.g. 3-4 LPA or Paid 1000/month or Unpaid"
+        />
+        <label for="exampleFormControlTextarea1">Location </label>
+        <input
+          type="text"
+          name="location"
+          placeholder="e.g. Delhi, Lucknow or Work From Home"
+        />
+        <label for="exampleFormControlTextarea1">Employment Type</label
+        ><select name="Employement_type">
+          <option>Part Time</option>
+          <option>Full Time</option>
+        </select>
+        <label>Experience (JOB) or Duration (Internship)</label>
+        <input
+          type="text"
+          name="Experience"
+          placeholder="Experience or INternship Time"
+        />
+        <label>Tech Stack Need</label>
+        <input type="text" name="tech_need" />
+        <label>Vacancy</label>
+        <input type="number" name="vacancy" />
+        <div>
+          <label id="abc">Status Active/ Inactive</label>
+          <input type="checkbox" name="status" class="uyh" />
+        </div>
+        <label for="exampleFormControlTextarea2">Minimum Requirements</label>
+        <textarea
+          id="exampleFormControlTextarea2"
+          rows="3"
+          name="minimum_requirement"
+        ></textarea>
+        <script type="text/javascript">
+          CKEDITOR.replace("exampleFormControlTextarea2");
+        </script>
+        <br />
+        <button type="submit">Submit it</button>
+        <br />
+        <br />
+      </form>
+    </div>
+  </body>
+</html>

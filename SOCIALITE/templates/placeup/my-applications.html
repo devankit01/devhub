@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" href="{% static 'jobs-intern.css' %}" />
+    <link rel="stylesheet" href="{% static 'my-applications.css' %}" />
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <title>PlaceUp | My Applications</title>
+  </head>
+  <body onload="clr()">
+    <nav class="nav_head">
+      <div class="left">
+        <h2>PlaceUp</h2>
+      </div>
+      <div class="right" style="margin-top: 5px">
+        <a href="{% url 'dashboard' %}" class="app"
+          ><i class="fas fa-home"></i
+        ></a>
+
+        <a href="" class="app"><i class="fas fa-location-arrow"></i></a>
+        <a href="{% url 'logout' %}" class="app"><i class="fas fa-lock"></i></a>
+      </div>
+    </nav>
+    <!-- Internships Goes here -->
+    <div class="kalam">
+      <button class="btn1" onclick="fun1()">Applied</button>
+      <button class="btn2" onclick="fun2()">Selected</button>
+      <button class="btn3" onclick="fun3()">Hired</button>
+    </div>
+
+    <!-- <h2 class="cardContainer" style="margin: 25px">My Applications</h2> -->
+    <div class="cardContainer" id="card1">
+      {% for val in data %}
+      <div class="card">
+        <span>#{{val.Type}}</span>
+        <div class="info">
+          <div>
+            <h2>{{val.work_name}}</h2>
+            <p class="cname">{{val.company.username.first_name}}</p>
+          </div>
+          <div>
+            <img
+              src="{% static '../media/images/' %}{{val.company.company_logo}}"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="info_more">
+          <p>
+            <i class="fas fa-map-marker-alt"></i
+            >&nbsp;&nbsp;&nbsp;&nbsp;{{val.location}}
+          </p>
+          <p>
+            <i class="fas fa-money-bill"></i
+            >&nbsp;&nbsp;{{val.salary_or_stipend}}
+          </p>
+          <p>
+            <i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp;
+            {{val.experience_or_time}}
+          </p>
+        </div>
+        <div class="apply" style="float: right">
+          <span>Applied&nbsp; <i class="fas fa-bolt"></i> </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- <h2 class="cardContainer" style="margin: 25px">Resume Selected</h2> -->
+    <div class="cardContainer" id="card2">
+      {% for val in data1 %}
+      <div class="card">
+        <span>#{{val.Type}}</span>
+        <div class="info">
+          <div>
+            <h2>{{val.work_name}}</h2>
+            <p class="cname">{{val.company.username.first_name}}</p>
+          </div>
+          <div>
+            <img
+              src="{% static '../media/images/' %}{{val.company.company_logo}}"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="info_more">
+          <p>
+            <i class="fas fa-map-marker-alt"></i
+            >&nbsp;&nbsp;&nbsp;&nbsp;{{val.location}}
+          </p>
+          <p>
+            <i class="fas fa-money-bill"></i
+            >&nbsp;&nbsp;{{val.salary_or_stipend}}
+          </p>
+          <p>
+            <i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp;
+            {{val.experience_or_time}}
+          </p>
+        </div>
+        <div class="apply" style="float: right">
+          <span>Selected&nbsp; <i class="fas fa-bolt"></i> </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- <h2 class="cardContainer" style="margin: 25px">Hired</h2> -->
+    <div class="cardContainer" id="card3">
+      {% for val in data2 %}
+      <div class="card">
+        <span>#{{val.Type}}</span>
+        <div class="info">
+          <div>
+            <h2>{{val.work_name}}</h2>
+            <p class="cname">{{val.company.username.first_name}}</p>
+          </div>
+          <div>
+            <img
+              src="{% static '../media/images/' %}{{val.company.company_logo}}"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="info_more">
+          <p>
+            <i class="fas fa-map-marker-alt"></i
+            >&nbsp;&nbsp;&nbsp;&nbsp;{{val.location}}
+          </p>
+          <p>
+            <i class="fas fa-money-bill"></i
+            >&nbsp;&nbsp;{{val.salary_or_stipend}}
+          </p>
+          <p>
+            <i class="fas fa-calendar-week"></i>&nbsp;&nbsp;&nbsp;
+            {{val.experience_or_time}}
+          </p>
+        </div>
+        <div class="apply" style="float: right">
+          <span>Hired&nbsp; <i class="fas fa-bolt"></i> </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <script type="text/javascript">
+      const btn1 = document.querySelector(".btn1");
+      const card1 = document.querySelector("#card1");
+      const card2 = document.querySelector("#card2");
+      const card3 = document.querySelector("#card3");
+
+      console.log(btn1, card1, card2, card3);
+      const clr = () => {
+        card1.style.display = "block";
+        card2.style.display = "none";
+        card3.style.display = "none";
+        // btn1.style.border = "1.5px solid #000";
+      };
+
+      const fun1 = () => {
+        card1.style.display = "block";
+        card2.style.display = "none";
+        card3.style.display = "none";
+        btn1.style.border = "1.5px solid #000";
+        btn2.style.border = "none";
+        btn3.style.border = "none";
+      };
+      const fun2 = () => {
+        card1.style.display = "none";
+        card2.style.display = "block";
+        card3.style.display = "none";
+        btn1.style.border = "none";
+        btn2.style.border = "1.5px solid #000";
+        btn3.style.border = "none";
+      };
+      const fun3 = () => {
+        card1.style.display = "none";
+        card2.style.display = "none";
+        card3.style.display = "block";
+        btn3.style.border = "1.5px solid #000";
+        btn1.style.border = "none";
+        btn2.style.border = "none";
+      };
+    </script>
+  </body>
+</html>
