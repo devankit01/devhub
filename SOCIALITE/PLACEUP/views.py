@@ -224,8 +224,11 @@ def work_view(request,id):
     work = Work.objects.filter(id=id)
     for i in work:
         print(i.applicants.all())
-        applicants = i.applicants.all()
-    return render(request,'placeup/job-view.html',{'applicants':applicants,'id':id})
+        applicants = i.applicants.all() 
+    for i in work:
+        print(i.resume_selected.all())
+        resume_selected = i.resume_selected.all()
+    return render(request,'placeup/job-view.html',{'applicants':applicants,'id':id, 'resume_selected':resume_selected})
 
 
 def select_resume(request,id1,work):

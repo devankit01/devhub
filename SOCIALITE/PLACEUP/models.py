@@ -33,6 +33,7 @@ class Work(models.Model):
     salary_or_stipend = models.CharField(max_length=20)
     applicants = models.ManyToManyField(Profile)
     resume_selected = models.ManyToManyField(Profile, related_name = 'resume_selected')
+    hired = models.ManyToManyField(Profile, related_name = 'hired')
 
 
 
