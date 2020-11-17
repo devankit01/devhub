@@ -27,16 +27,19 @@
       </div>
     </nav>
     <div class="container">
-      <div class="job"></div>
-      <h2 style="margin: 20px 0px;">Applicants</h2>
+      <!-- <div class="job"></div> -->
+
+      <!-- Applicants -->
+      <h2 style="margin: 20px 0px">Applicants</h2>
       <div class="section_table">
         <!-- <h2 style="margin-bottom: 15px;">Job List</h2> -->
         <table>
           <tr>
             <th>Name</th>
             <th>Year</th>
-            <th>View Details</th>
-            <th>Resume Selected</th>
+            <th>Resume</th>
+            <th>Portfolio</th>
+            <th>Select Resume</th>
           </tr>
           {% for val in applicants %}
           <tr>
@@ -44,12 +47,91 @@
             <td>{{val.college_year}}</td>
 
             <td>
-              <a href="{{val.resume}}" target="_"
+              <a href="//{{val.resume}}" target="_"
+                >Click <i class="fas fa-external-link-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a href="//{{val.portfolio}}" target="_"
                 >Click <i class="fas fa-external-link-alt"></i
               ></a>
             </td>
             <td>
               <a href="{% url 'select_resume' id1=val.username.id work=id %}"
+                >Select
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+      <!-- Resume Selected -->
+      <h2 style="margin: 20px 0px">Resume Selected Candidates</h2>
+      <div class="section_table">
+        <!-- <h2 style="margin-bottom: 15px;">Job List</h2> -->
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Resume</th>
+            <th>Portfolio</th>
+            <th>Hire Candidate</th>
+          </tr>
+          {% for val in resume_selected %}
+          <tr>
+            <td>{{val.username.first_name}} {{val.username.last_name}}</td>
+            <td>{{val.college_year}}</td>
+
+            <td>
+              <a href="//{{val.resume}}" target="_"
+                >Click <i class="fas fa-external-link-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a href="//{{val.portfolio}}" target="_"
+                >Click <i class="fas fa-external-link-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a href="{% url 'select_hired' id1=val.username.id work=id %}"
+                >Select
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+      <!-- Hired Candidates -->
+      <h2 style="margin: 20px 0px">Hired Candidates</h2>
+      <div class="section_table">
+        <!-- <h2 style="margin-bottom: 15px;">Job List</h2> -->
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Resume</th>
+            <th>Portfolio</th>
+            <th>Send Confirmation</th>
+          </tr>
+          {% for val in hired %}
+          <tr>
+            <td>{{val.username.first_name}} {{val.username.last_name}}</td>
+            <td>{{val.college_year}}</td>
+
+            <td>
+              <a href="//{{val.resume}}" target="_"
+                >Click <i class="fas fa-external-link-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a href="//{{val.portfolio}}" target="_"
+                >Click <i class="fas fa-external-link-alt"></i
+              ></a>
+            </td>
+            <td>
+              <a href="{% url 'select_hired' id1=val.username.id work=id %}"
                 >Select
               </a>
             </td>

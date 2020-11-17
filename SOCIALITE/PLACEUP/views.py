@@ -47,32 +47,32 @@ def orgsignup(request):
 # def orgsignin(request):
 #     return render(request, 'placeup/accounts/signin.html')
 
-def orgsignin(request):
+# def orgsignin(request):
 
-    if request.method == 'POST':
-        try:
-            # Check User in DB
-            uname = request.POST['username']
-            print(uname)
-            uname = uname[0:-10]
-            print(uname)
-            pwd = request.POST['pass1']
-            print(uname, pwd)
-            ud = User.objects.get(username=uname)
-            dd = CompanyProfile.objects.get(username = ud)
-            user_authenticate = auth.authenticate(username=uname, password=pwd)
-            if user_authenticate is not None:
-                auth.login(request, user_authenticate)
-                request.session['username'] = uname
-                print('Successfully Login')
-                return redirect('orgprofile')
+#     if request.method == 'POST':
+#         try:
+#             # Check User in DB
+#             uname = request.POST['username']
+#             print(uname)
+#             uname = uname[0:-10]
+#             print(uname)
+#             pwd = request.POST['pass1']
+#             print(uname, pwd)
+#             ud = User.objects.get(username=uname)
+#             dd = CompanyProfile.objects.get(username = ud)
+#             user_authenticate = auth.authenticate(username=uname, password=pwd)
+#             if user_authenticate is not None:
+#                 auth.login(request, user_authenticate)
+#                 request.session['username'] = uname
+#                 print('Successfully Login')
+#                 return redirect('orgprofile')
 
-            else:
-                print('Login Failed')
-                return render(request, 'placeup/accounts/signin.html', {"msg": "Invalid Credentials ❌"})
-        except:
-            return render(request, 'placeup/accounts/signin.html')
-    return render(request, 'placeup/accounts/signin.html')
+#             else:
+#                 print('Login Failed')
+#                 return render(request, 'placeup/accounts/signin.html', {"msg": "Invalid Credentials ❌"})
+#         except:
+#             return render(request, 'placeup/accounts/signin.html')
+#     return render(request, 'placeup/accounts/signin.html')
 
 
 def orglogout(request):
@@ -80,7 +80,7 @@ def orglogout(request):
         del request.session['username']
     except:
         pass
-    return redirect('orgsignin')
+    return redirect('/')
 
 
 def orgprofile(request):
@@ -154,6 +154,7 @@ def JobHire(request):
             user = User.objects.get(username = request.session['username'])
             company = CompanyProfile.objects.get(username = user)
             works = Work.objects.filter(company = company)
+            works = works[::-1]
             print(works)
         return render(request,'placeup/org_job_.html',{'works':works})
     except:
@@ -213,11 +214,14 @@ def myapplications(request):
     profile = Profile.objects.get(username = user)
     myapplications = Work.objects.filter(applicants = profile)
     resume_selected = Work.objects.filter(resume_selected = profile)
+    hired = Work.objects.filter(hired = profile)
     # applied = Work.objects.filter(applicants = user)
     print(myapplications,resume_selected)
     myapplications = myapplications[::-1]
     resume_selected = resume_selected[::-1]
-    return render(request, 'placeup/my-applications.html',{'data':myapplications, 'data1':resume_selected})
+    hired = hired[::-1]
+    
+    return render(request, 'placeup/my-applications.html',{'data':myapplications, 'data1':resume_selected,'data2':hired})
 
 
 def work_view(request,id):
@@ -228,15 +232,62 @@ def work_view(request,id):
     for i in work:
         print(i.resume_selected.all())
         resume_selected = i.resume_selected.all()
-    return render(request,'placeup/job-view.html',{'applicants':applicants,'id':id, 'resume_selected':resume_selected})
+    for i in work:
+        print(i.hired.all())
+        hired = i.hired.all()
+    # print(type(list(resume_selected)))
+    # for i in resume_selected:
+    #     for j in applicants:
+    #         if i == j:
+    #             applicants.remove(i)
+    # print(applicants)
+    applicants = list(applicants)
+    resume_selected = list(resume_selected)
+    hired = list(hired)
+
+    for i in resume_selected:
+        if i in applicants:
+            applicants.remove(i)
+    print(applicants)
+
+    for i in hired:
+        if i in resume_selected:
+            resume_selected.remove(i)
+    return render(request,'placeup/job-view.html',{'applicants':applicants,'id':id, 'resume_selected':resume_selected,'hired':hired})
 
 
 def select_resume(request,id1,work):
+    try:
+        print(id1,work)
+        work = Work.objects.get(id=work)
+
+        user =  User.objects.get(id=id1)
+        profile = Profile.objects.get(username = user)
+        subject = '{}'.format(work.company.username.first_name)
+        message = "Hi {} ,\n\nCongratulations, Your resume has been selected by {}.\n\nWe wish a very good luck for future.\n\n Thank you".format(profile.username,work.company.username.first_name)
+        recepient = [profile.username.email]
+        print(profile.username.email)
+        send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
+        print('Email ok')
+        d = work.resume_selected.add(profile)
+        return redirect('work_view',id=work.id)
+    except:
+        return HttpResponse('Try one more time.')
+
+
+
+def select_hired(request,id1,work):
     print(id1,work)
     work = Work.objects.get(id=work)
 
     user =  User.objects.get(id=id1)
     profile = Profile.objects.get(username = user)
-    d = work.resume_selected.add(profile)
+    subject = '{}'.format(work.company.username.first_name)
+    message = "Hi {} ,\n\nCongratulations, Your are hired by {} for a Job role of {}.\n\nWe wish a very good luck for future.\n\n Thank you".format(profile.username,work.company.username.first_name,work.work_name)
+    recepient = [profile.username.email]
+    print(profile.username.email)
+    send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
+    print('Email ok')
+    d = work.hired.add(profile)
 
     return redirect('work_view',id=work.id)

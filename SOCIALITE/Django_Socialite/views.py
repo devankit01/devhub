@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from .models import *
 import math
 import json
-
+from PLACEUP.models import CompanyProfile
+from PLACEUP.views import orgprofile
 # Create your views here.
 def home(request):
     return render(request, 'social/index.html')
@@ -52,14 +53,21 @@ def signin(request):
             pwd = request.POST['pass1']
             print(uname, pwd)
             kk = User.objects.get(username=uname)
-            Profile.objects.get(username = kk)
+
             user_authenticate = auth.authenticate(username=uname, password=pwd)
             if user_authenticate is not None:
                 auth.login(request, user_authenticate)
                 request.session['username'] = uname
                 print('Successfully Login')
-                return redirect('dashboard')
-
+                try:
+                    Profile.objects.get(username = kk)
+                    return redirect('dashboard')
+                except:
+                    try:
+                        dd = CompanyProfile.objects.get(username = kk)
+                        return redirect('orgprofile')
+                    except:
+                        pass
             else:
                 print('Login Failed')
                 return render(request, 'social/accounts/signin.html', {"msg": "Invalid Credentials ❌"})
@@ -487,7 +495,7 @@ def logout(request):
         del request.session['username']
     except:
         pass
-    return redirect('signin')
+    return redirect('/')
 
 
 def user_profile(request, id):

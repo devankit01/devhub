@@ -9,14 +9,30 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <title>Home</title>
+    <style>
+        .nav_head{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav_head .right a{
+            text-decoration: none;
+            border: 2px solid #000;
+            box-shadow: 4px 4px 6px rgba(0,0,0,0.2);
+            padding: 3px 17px;
+            border-radius: 3px;
+            margin: 0 10px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
-
 <body>
-    <nav>
+    <nav class="nav_head">
         <div class="left">
             <h2>devhub</h2>
         </div>
-        <div class="right"></div>
+        <div class="right">
+            <a href="{% url 'signin' %}">Login</a>
+        </div>
     </nav>
     <div class="header">
         <div class="landing">
