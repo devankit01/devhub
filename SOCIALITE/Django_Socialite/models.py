@@ -11,6 +11,7 @@ class Profile(models.Model):
     bio = models.TextField(max_length=200)
     college_name = models.CharField(max_length=100, null=True)
     college_year = models.CharField(max_length=100, null=True)
+    college_branch = models.CharField(max_length=20, null = True)
     resume = models.CharField(max_length=210, null=True)
     portfolio = models.CharField(max_length=210, null=True)
     username = models.OneToOneField(User, on_delete=models.CASCADE)

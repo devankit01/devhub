@@ -132,7 +132,7 @@ margin-top:100px;
 
 
 input,textarea,select{
-margin: 10px 14px;
+margin: 8px 14px;
 padding: 4px 6px;
 width: 300px;
 
@@ -150,6 +150,31 @@ width: 100%;
 height: auto;
 
 }
+
+.resume{
+	margin:20px 0px;
+
+font-size:19px;
+font-weight:500;
+}
+.resume div a{
+	border:2px solid #000;
+	padding:2px 10px;
+	color:#000;
+	box-shadow:4px 4px 6px rgba(0,0,0,0.1);
+	text-decoration:none;
+	border-radius:3px;
+	margin-right:15px;
+	transition:0.3s ease-in;
+}
+.resume div a:hover{
+	
+	color:#fff;
+	background:#000;
+
+
+}
+
 {% endblock %}
 
 
@@ -172,10 +197,10 @@ height: auto;
 		</div>
 		<div class="div2" style="margin-top: 70px;">
 			<h2>{{ d.name }}</h2>
-			<span style="font-weight: 550;color: rgba(0,0,0,0.6);">{{p.college_name}} | {{p.college_year}} year</span>
+			<span style="font-weight: 550;color: rgba(0,0,0,0.6);">{{p.college_branch}} | {{p.college_year}} year</span>
 			<p style="margin-top: 6px;margin-left: ; font-size: 22px;"><a href="{{p.fb}}" style="color: #000;"><i
 						class="fab fa-facebook"></i></a>
-				<a href="{{p.lkd}}" style="color: #000;"><i class="fab fa-linkedin"></i></a>
+
 				<a href="{{p.git}}" style="color: #000;"><i class="fab fa-github"></i></a>
 				<a href="{{p.hacker}}" style="color: #000;"><i class="fab fa-hackerrank"></i></a>
 			<p style="font-size: 13px;margin-top: 6px;"><b>Connections : {{following}}</b></p>
@@ -196,13 +221,28 @@ height: auto;
 				<form method="POST" action="{% url 'update_profile' %}">
 					{% csrf_token %}
 					<!-- <input type="url" name="fb" placeholder="Facebook URL" value="{{p.fb}}"> -->
-					<input type="url" name="linkedin" placeholder="LinkedIn URL" value="{{p.lkd}}">
+					<input type="url" name="fb" placeholder="Facebook URL" value="{{p.fb}}">
 					<input type="url" name="hacker" placeholder="Hackerrank URL" value="{{p.hacker}}">
 					<input type="url" name="git" placeholder="Github URL" value="{{p.git}}">
-					<input type="text" name="cname" placeholder="College Name" value="{{p.college_name}}">
+					{% comment %} <input type="text" name="cname" placeholder="College Name" value="{{p.college_name}}">
+					{% endcomment %}
 					<input type="text" name="resume" placeholder="Resume Link" value="{{p.resume}}">
 					<input type="text" name="portfolio" placeholder="Portfolio Link" value="{{p.portfolio}}">
 
+					<select name="cbranch">
+						<option value="{{p.college_branch}}">Select Branch</option>
+						<option value="CSE">CSE</option>
+						<option value="IT">IT</option>
+						<option value="ME">ME</option>
+						<option value="CE">CE</option>
+						<option value="EE">EE</option>
+						<option value="EC">EC</option>
+						<option value="BT">BT</option>
+						<option value="AG">AG</option>
+
+
+
+					</select>
 					<select name="cyear">
 						<option value="{{p.college_year}}">Select year</option>
 						<option value="1st">1st</option>
@@ -279,17 +319,17 @@ height: auto;
 
 	</div>
 
+	
 	<h1 style="margin-top: 30px;margin-bottom: 6px;">Resume</h1>
-	<div class="parent-two">
+	<div class="resume">
 		<div style="float: left;">
-		Resume Link : <a href="{{p.resume}}">Click</a>
-		Portfolio Link : <a href="{{p.portfolio}}">Click</a>
-	</div>
+			<span> <a href="{{p.resume}}">Resume Link</a></span>
+			<span><a href="{{p.portfolio}}">Portfolio</a></span>
+		</div>
 
 	</div>
 </div>
 <script type="text/javascript">
-
 	var modal = document.querySelector(".modal");
 	var trigger = document.querySelector(".trigger");
 	var closeButton = document.querySelector(".close-button");
@@ -307,8 +347,6 @@ height: auto;
 	trigger.addEventListener("click", toggleModal);
 	closeButton.addEventListener("click", toggleModal);
 	window.addEventListener("click", windowOnClick);
-
-
 </script>
 
 {% endblock %}

@@ -193,18 +193,19 @@ def update_profile(request):
     print(obj)
     user = User.objects.get(username=obj)
     p = Profile.objects.get(username=user)
-    p.lkd = request.POST['linkedin']
+    p.fb = request.POST['fb']
     p.hacker = request.POST['hacker']
     p.git = request.POST['git']
     p.bio = request.POST['bio']
-    p.college_name = request.POST['cname']
+    # p.college_name = request.POST['cname']
     p.college_year = request.POST['cyear']
+    p.college_branch = request.POST['cbranch']
     p.resume = request.POST['resume']
     p.portfolio = request.POST['portfolio']
     p.save()
 
-    print(request.POST['linkedin'],
-           request.POST['hacker'], request.POST['git'], request.POST['bio'])
+    # print(request.POST['linkedin'],
+    #        request.POST['hacker'], request.POST['git'], request.POST['bio'])
     return redirect('/user/profile')
 
 
@@ -459,12 +460,9 @@ def edit_post(request, id):
         p.content = request.POST['content']
         try:
             if request.FILES['img']:
-                i = request.FILES['img']
-            else:
-                i = ''
+                p.image = request.FILES['img']
         except:
-            i = ""
-        p.image = i
+            pass
         p.save()
         return redirect('/user/posts')
     # s = Skill.objects.get(id=id)
@@ -798,5 +796,4 @@ def myresume(request):
             'name': str(f+' '+l)
         }
         return render(request, 'social/resume.html',{'d': context,'p':p,'kk':kk})
-
 

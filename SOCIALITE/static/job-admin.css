@@ -64,3 +64,31 @@ nav {
   table a{
       text-decoration: none;
   }
+  .filter_card{
+    border: 2px solid #000;
+    padding: 8px 10px;
+    margin: 20px 0px;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+  }
+  .filter_card option,select{
+    padding: 2px 8px;
+    margin: 8px 0px;
+    font-size: 16px;
+  }
+  .filter_card select:hover{
+    background: darkblue;
+    color: white;
+  }
+#fc{
+  display: block;
+}
+.link_select{
+  border: 2px solid darkblue;
+  color: #000!important;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+table a{
+  color: rgb(51, 50, 50)!important;
+}

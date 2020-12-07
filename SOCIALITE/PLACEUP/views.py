@@ -4,6 +4,13 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from SOCIALITE.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+
+# For html content sending
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+
 # Create your views here.
 
 
@@ -186,19 +193,54 @@ def job_add(request):
         if status=="on":
             status=True
         else:
-            status=False
+            status=True
         id=User.objects.get(username=request.user)
     
         cmpny=CompanyProfile.objects.get(username=id)
     
         job=Work(work_name=request.POST['wpn'],company=cmpny,salary_or_stipend=salary,Type=Type,about=about,location=location,emp_type=employee,experience_or_time=experience,tech_stack=tech_need,status=status,min_requirement=minimum_req,number_of_vacancy=vacancy)
-        job.save()
-        return redirect('job_add')
+
+        '''subject = 'Job Notification'
+        message = "Hi geek,\n\nA new job has been posted for a job role of {} by the company named {}.\n\nClick to apply .\n\nWe wish a very good luck.\n\n Thank you".format(request.POST['wpn'],cmpny)
+        email_data = Profile.objects.all()
+
+        for i in email_data:
+            recepient = [i.username.email]
+            print(i,"===>",i.username.email)
+            send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
+        '''
+
+        #  Fetch all data
+        data_w = Work.objects.all()[::-1]
+
+        # Function send to email
+        send_email(data_w)
+
+
+        # Save
+        # job.save()
+
+        return redirect('JobHire')
     else:
         return render(request,'placeup/Add_job_form.html')
 
 # def add_form_job(request):
-
+def send_email(data_w):
+        subject, from_email = 'Job Notification', EMAIL_HOST_USER
+        html_content = render_to_string('email/job_mail.html',{'works':data_w}) # render with dynamic value
+        text_content = strip_tags(html_content) # Strip the html tag. So people can see the pure text at least.
+        # create the email, and attach the HTML version as well.
+        emails = Profile.objects.all()
+        to = []
+        for i in emails:
+            to.append(i.username.email)
+            # print(i.username.email)
+        print(to)
+        msg = EmailMultiAlternatives(subject, text_content, 'Job Notify' + EMAIL_HOST_USER, to)
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        print('Email ok')
+        
 def apply_job(request,id):
     print(request.session['username'],id)
     user = User.objects.get(username = request.session['username'])
@@ -260,7 +302,6 @@ def select_resume(request,id1,work):
     try:
         print(id1,work)
         work = Work.objects.get(id=work)
-
         user =  User.objects.get(id=id1)
         profile = Profile.objects.get(username = user)
         subject = '{}'.format(work.company.username.first_name)
@@ -277,17 +318,18 @@ def select_resume(request,id1,work):
 
 
 def select_hired(request,id1,work):
-    print(id1,work)
-    work = Work.objects.get(id=work)
-
-    user =  User.objects.get(id=id1)
-    profile = Profile.objects.get(username = user)
-    subject = '{}'.format(work.company.username.first_name)
-    message = "Hi {} ,\n\nCongratulations, Your are hired by {} for a Job role of {}.\n\nWe wish a very good luck for future.\n\n Thank you".format(profile.username,work.company.username.first_name,work.work_name)
-    recepient = [profile.username.email]
-    print(profile.username.email)
-    send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
-    print('Email ok')
-    d = work.hired.add(profile)
-
-    return redirect('work_view',id=work.id)
+    try:
+        print(id1,work)
+        work = Work.objects.get(id=work)
+        user =  User.objects.get(id=id1)
+        profile = Profile.objects.get(username = user)
+        subject = '{}'.format(work.company.username.first_name)
+        message = "Hi {} ,\n\nCongratulations, Your are hired by {} for a Job role of {}.\n\nWe wish a very good luck for future.\n\n Thank you".format(profile.username,work.company.username.first_name,work.work_name)
+        recepient = [profile.username.email]
+        print(profile.username.email)
+        send_mail(subject, message, EMAIL_HOST_USER, recepient, fail_silently = False)
+        print('Email ok')
+        d = work.hired.add(profile)
+        return redirect('work_view',id=work.id)
+    except:
+        return HttpResponse('Try one more time.')

@@ -40,13 +40,14 @@
         <label for="exampleFormControlTextarea1"
           >Job/Internship Profile Name</label
         >
-        <input type="text" name="wpn" placeholder="e.g. Python Developer" />
+        <input type="text" name="wpn" placeholder="e.g. Python Developer" required/>
 
         <label for="exampleFormControlTextarea1">About The job</label>
         <textarea
           id="exampleFormControlTextarea1"
           rows="3"
           name="about"
+          required
         ></textarea>
         <script type="text/javascript">
           CKEDITOR.replace("exampleFormControlTextarea1");
@@ -59,12 +60,14 @@
           type="text"
           name="salary"
           placeholder="e.g. 3-4 LPA or Paid 1000/month or Unpaid"
+          required
         />
         <label for="exampleFormControlTextarea1">Location </label>
         <input
           type="text"
           name="location"
           placeholder="e.g. Delhi, Lucknow or Work From Home"
+          required
         />
         <label for="exampleFormControlTextarea1">Employment Type</label
         ><select name="Employement_type">
@@ -76,6 +79,7 @@
           type="text"
           name="Experience"
           placeholder="Experience or INternship Time"
+          required
         />
         <label>Tech Stack Need</label>
         <input type="text" name="tech_need" />
@@ -90,12 +94,13 @@
           id="exampleFormControlTextarea2"
           rows="3"
           name="minimum_requirement"
+          required
         ></textarea>
         <script type="text/javascript">
           CKEDITOR.replace("exampleFormControlTextarea2");
         </script>
         <br />
-        <button type="submit">Submit it</button>
+        <button type="submit" class="btn-submit" style="padding:6px 12px; margin: 20px 0px;background-color: rgb(16, 214, 214);border: none;box-shadow: 4px 4px 5px rgba(0,0,0,0.1);border-radius: 2px;font-weight: 500;">Submit it</button>
         <br />
         <br />
       </form>
